@@ -5,6 +5,8 @@ const progressBar = document.getElementById('boot-progress');
 const bootStatus = document.getElementById('boot-status');
 const Time = document.getElementById('time');
 const day = document.getElementById('date');
+const widgetTime = document.getElementById('widget-time');
+const widgetDate = document.getElementById('widget-date');
 
 const statuses = [
         "Loading system core...",
@@ -182,6 +184,10 @@ function updateClock() {
     const seconds = now.getSeconds().toString().padStart(2, '0');
     Time.textContent = `${hours}:${minutes}:${seconds}`;
     day.textContent = now.toDateString();
+    widgetTime.textContent = `${hours}:${minutes}:${seconds}`;
+    widgetDate.textContent = now.toDateString();
 }
+
+// Right Click Functions
 
 setInterval(updateClock, 1000);

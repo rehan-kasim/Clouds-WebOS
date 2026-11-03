@@ -21,6 +21,14 @@
             </div>
         </div>
 
+        <!--widgets-->
+        <!--clock widget-->
+        <div class="rounded-full w-80 h-40 bg-white/10 backdrop-blur-xl absolute top-4 right-4 flex flex-col items-center justify-center p-4 z-40 hover:border-2 transition hover:bg-white/20 hover:border-amber-100">
+            <p class="text-2xl text-white">Date & Time</p>
+            <p id="widget-date" class="text-4xl text-white">1 Jan 2026</p>
+            <p id="widget-time" class="text-4xl text-white">10:00 AM</p>
+        </div>
+
         <!-- Task Bar -->
         <div id="taskbar" class="absolute bottom-0 left-0 w-full h-12 bg-gray-800 flex items-center justify-between px-4 bg-gradient-to-br from-gray-800 to-gray-900 z-40">
             
@@ -67,8 +75,8 @@
                 </button>
                 <!--Date & Time-->
                 <div class="hover:border-2 hover:border-gray-600 px-2 py-1 rounded transition flex flex-col items-center border-2 border-gray-800">
-                    <p id="date" class="text-xs text-gray-400">1 Jan 2026</p>
-                    <p id="time" class="text-xs text-gray-400">10:00 AM</p>
+                    <p id="date" class="date text-xs text-gray-400">1 Jan 2026</p>
+                    <p id="time" class="time text-xs text-gray-400">10:00 AM</p>
                 </div>
             </div>
         </div>
