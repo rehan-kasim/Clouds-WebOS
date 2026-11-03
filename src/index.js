@@ -415,6 +415,41 @@ async function loadWeather_widget() {
 }
 
 // stopwatch logic
+const stopwatchtime = document.getElementById('stopwatch-time');
+const stopwatchstart = document.getElementById('stopwatch-start');
+const stopwatchstop = document.getElementById('stopwatch-stop');
+const stopwatchreset = document.getElementById('stopwatch-reset');
+
+let swtimer = null;
+let totaltime = 0;
+
+function showStopwatch(){
+    const mins = Math.floor(totaltime / 60000).toString().padStart(2, '0');
+    const secs = Math.floor((totaltime % 60000) / 1000).toString().padStart(2, '0');
+    const cs = Math.floor((totaltime % 1000) / 10).toString().padStart(2, '0');
+    stopwatchtime.textContent = `${mins}:${secs}.${cs}`;
+}
+
+stopwatchstart.onclick = function() {
+    if (swtimer) return; // already running, dont start a second timer
+    swtimer = setInterval(() => {
+        totaltime += 10;
+        showStopwatch();
+    }, 10);
+    console.log("btn prsed")
+};
+
+stopwatchstop.onclick = function() {
+    clearInterval(swtimer);
+    swtimer = null;
+};
+
+stopwatchreset.onclick = function() {
+    clearInterval(swtimer);
+    swtimer = null;
+    totaltime = 0;
+    showStopwatch();
+};
 
 
 loadWeather_widget();
