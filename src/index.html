@@ -23,10 +23,11 @@
 
         <!--widgets-->
         <!--clock widget-->
-        <div class="rounded-full w-80 h-40 bg-white/10 backdrop-blur-xl absolute top-4 right-4 flex flex-col items-center justify-center p-4 z-40 hover:border-2 transition hover:bg-white/20 hover:border-amber-100">
-            <p class="text-2xl text-white">Date & Time</p>
+        <div class="rounded-lg w-80 h-40 bg-white/10 backdrop-blur-xl absolute top-4 right-4 flex flex-col items-center justify-center p-4 z-40 transition hover:bg-white/20">
             <p id="widget-date" class="text-4xl text-white">1 Jan 2026</p>
             <p id="widget-time" class="text-4xl text-white">10:00 AM</p>
+            <p id="widget-city" class="text-2xl text-white">delhi</p>
+            <p id="widget-temp" class="text-2xl text-white">10 C</p>
         </div>
 
         <!-- Task Bar -->
@@ -93,6 +94,10 @@
 
         <!-- Apps Workspace -->
         <div id="apps">
+            <!--Stopwatch app-->
+            <div id="stopwatch-app" class="main-window hidden flex flex-col absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 bg-gray-900/95 backdrop-blur-md rounded-xl shadow-2xl border border-gray-700 text-white z-30 overflow-hidden">
+                
+            </div>
             <!--Weather App-->
             <div id="weather-app" class="main-window hidden flex flex-col absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 bg-gray-900/95 backdrop-blur-md rounded-xl shadow-2xl border border-gray-700 text-white z-30 overflow-hidden">
                 <!--Window Header-->

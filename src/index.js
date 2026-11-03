@@ -137,7 +137,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('mouseup', () => { activeWindow = null; });
 });
 
-// the white line under the taskbar icon
 function setIndicator(appId, on) {
     const ind = document.querySelector(`#taskbar-icons [data-app="${appId}"] .indicator`);
     if (ind) ind.style.opacity = on ? '1' : '0';
@@ -167,7 +166,7 @@ function openApp(appId) {
 
     if (wasMinimized) {
         delete app.dataset.minimized;
-        app.style.visibility = 'hidden'; // ghost plays instead of the real one
+        app.style.visibility = 'hidden';
         const g = genieGhost(app, appId);
         if (g) {
             playGhost(app, g, { duration: 500, easing: 'ease-out', direction: 'reverse' },
@@ -199,7 +198,6 @@ function maximize(appId) {
     }
     if (app.dataset.placed !== 'true') placeWindowCenter(app);
 
-    // save the old size so restore can put it back
     app.dataset.prev = JSON.stringify({
         left: app.style.left, top: app.style.top,
         width: app.style.width, height: app.style.height,
@@ -228,7 +226,6 @@ function restorewindow(appId) {
 }
 
 // genie animation woowww
-// animating a copy of the window, animating the real one clashed with the tailwind classes
 function genieGhost(app, appId) {
     const icon = document.querySelector(`#taskbar-icons [data-app="${appId}"]`);
     if (!icon) return null;
@@ -249,7 +246,6 @@ function genieGhost(app, appId) {
         `pointer-events:none;z-index:8000;`;
     document.body.appendChild(ghost);
 
-    // clip-path only animates if every frame has the same number of points
     const frames = [
         { transform: 'translate(0px,0px) scale(1,1)', opacity: 1,
           clipPath: 'polygon(0% 0%,100% 0%,100% 100%,0% 100%)' },
@@ -274,14 +270,14 @@ function playGhost(app, g, options, done) {
     const anim = g.ghost.animate(g.frames, options);
     anim.onfinish = end;
     anim.oncancel = end;
-    setTimeout(end, options.duration + 200); // in case onfinish never fires, app got stuck once
+    setTimeout(end, options.duration + 200);
 }
 
 function minimize(appId) {
     const app = document.getElementById(appId);
     if (!app || app.dataset.animating === 'true') return;
 
-    const g = genieGhost(app, appId); // has to be measured before hiding
+    const g = genieGhost(app, appId);
     app.dataset.minimized = 'true';
     hideWin(app);
     if (g) playGhost(app, g, { duration: 500, easing: 'ease-in', fill: 'forwards' });
@@ -337,9 +333,11 @@ function updateClock() {
 const ApiKey = '1d67ecf8acbc6348a362b908df6b380c';
 const city = document.getElementById('CityName');
 const temp = document.getElementById('temperatureinfo');
-const humidity = document.getElementById('humidityinfo');
+const humidity = document.getElementById('h(umidityinfo');
 const sky = document.getElementById('skyinfo');
-const emoji = document.getElementById('emojiinfo');
+const emoji = document.getElementById('emoj(iinfo');
+const widgetcity = document.getElementById("widget-city");
+const widgettemp = document.getElementById("widget-temp");
 const WEATHER_EVERY = 10 * 60 * 1000;
 let lastWeather = 0;
 
@@ -367,7 +365,7 @@ async function getLocation() {
 
 async function loadWeather() {
     if (Date.now() - lastWeather < WEATHER_EVERY) return;
-    lastWeather = Date.now(); // set early so a double click doesnt send two requests
+    lastWeather = Date.now();
  
     city.textContent = 'Loading...';
  
@@ -379,7 +377,9 @@ async function loadWeather() {
         const data = await res.json();
  
         city.textContent = data.name;
+        widgetcity.textContent = data.name;
         temp.textContent = `${Math.round(data.main.temp)}°C`;
+        widgettemp.textContent = `${Math.round(data.main.temp)}°C`;
         humidity.textContent = `Humidity: ${data.main.humidity}%`;
         sky.textContent = `Sky: ${data.weather[0].main}`;
         emoji.textContent = weatherEmoji(data.weather[0].main, data.weather[0].icon);
@@ -391,5 +391,29 @@ async function loadWeather() {
     }
 }
 
+async function loadWeather_widget() {
+    if (Date.now() - lastWeather < WEATHER_EVERY) return;
+    lastWeather = Date.now();
+ 
+    city.textContent = 'Loading...';
+ 
+    try {
+        const loc = await getLocation();
+        const url = `https://api.openweathermap.org/data/2.5/weather?lat=${loc.lat}&lon=${loc.lon}&units=metric&appid=${ApiKey}`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('openweather said ' + res.status);
+        const data = await res.json();
+ 
+        widgetcity.textContent = data.name;
+        widgettemp.textContent = `${Math.round(data.main.temp)}°C`;
+    }
+    catch (err) {
+        console.log('weather failed:', err);
+        lastWeather = 0; // let the next open try again
+        widgetcity.textContent = 'No data';
+    }
+}
+
+loadWeather_widget();
 updateClock(); // Initial call to set the clock immediately
 setInterval(updateClock, 1000);
