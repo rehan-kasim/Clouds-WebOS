@@ -84,7 +84,11 @@
                     <img src="icons/weather-icon.png" alt="Weather" class="w-6 h-6">
                     <span class="indicator" style="position:absolute;bottom:1px;left:50%;margin-left:-8px;width:16px;height:2px;border-radius:2px;background:#fff;opacity:0;transition:opacity .3s;pointer-events:none;"></span>
                 </button>
-                <!--Date & Time-->
+                <button data-app="stopwatch-app" onclick="openApp('stopwatch-app')" class="hover:bg-gray-700 p-1.5 rounded transition" style="position:relative;">
+                    <img src="icons/settings-icon.svg" alt="stopwatch-app" class="w-8 h-6">
+                    <span class="indicator" style="position:absolute;bottom:1px;left:50%;margin-left:-8px;width:16px;height:2px;border-radius:2px;background:#fff;opacity:0;transition:opacity .3s;pointer-events:none;"></span>
+                </button>
+                <!--Date & Time Alawys in the last-->
                 <div class="hover:border-2 hover:border-gray-600 px-2 py-1 rounded transition flex flex-col items-center border-2 border-gray-800">
                     <p id="date" class="date text-xs text-gray-400">1 Jan 2026</p>
                     <p id="time" class="time text-xs text-gray-400">10:00 AM</p>
@@ -104,6 +108,18 @@
                         <button onclick="maximize('stopwatch-app')" class="hover:bg-gray-700 px-2 py-0.5 rounded text-gray-400 hover:text-white">□</button>
                         <button onclick="closeApp('stopwatch-app')" class="hover:bg-red-600 px-2 py-0.5 rounded text-gray-400 hover:text-white">✕</button>
                     </div>
+                </div>
+                <!--Body-->
+                <div class="flex flex-1 w-auto flex-col items-center justify-center gap-2 rounded-lg bg-gray-700 p-6 text-center shadow-lg">
+                    <label class="text-2xl text-white font-bold">
+                        00:00:00
+                    </label>
+                    <div>
+                        <button class="bg-green-800 rounded-lg pt-1 pb-1 pl-1 pr-1">Start</button>
+                        <button class="bg-yellow-500 rounded-lg pt-1 pb-1 pl-1 pr-1">Stop</button>
+                        <button class="bg-red-500 rounded-lg pt-1 pb-1 pl-1 pr-1">Reset</button>
+                    </div>
+                    
                 </div>
             </div>
             <!--Weather App-->

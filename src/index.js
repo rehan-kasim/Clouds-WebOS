@@ -16,7 +16,7 @@ const statuses = [
     "Welcome"
 ];
 let progress = 0;
-const totalBootTime = 5000;
+const totalBootTime = 1000;
 const intervalTime = 50;
 const increment = (intervalTime / totalBootTime) * 100;
 
@@ -413,6 +413,9 @@ async function loadWeather_widget() {
         widgetcity.textContent = 'No data';
     }
 }
+
+// stopwatch logic
+
 
 loadWeather_widget();
 updateClock(); // Initial call to set the clock immediately

@@ -15,6 +15,8 @@
     --color-red-900: oklch(39.6% 0.141 25.723);
     --color-amber-50: oklch(98.7% 0.022 95.277);
     --color-amber-100: oklch(96.2% 0.059 95.617);
+    --color-yellow-500: oklch(79.5% 0.184 86.047);
+    --color-green-800: oklch(44.8% 0.119 151.328);
     --color-sky-400: oklch(74.6% 0.16 232.661);
     --color-blue-400: oklch(70.7% 0.165 254.624);
     --color-blue-500: oklch(62.3% 0.214 259.815);
@@ -324,6 +326,9 @@
   .h-1\.5 {
     height: calc(var(--spacing) * 1.5);
   }
+  .h-2 {
+    height: calc(var(--spacing) * 2);
+  }
   .h-3 {
     height: calc(var(--spacing) * 3);
   }
@@ -359,6 +364,12 @@
   }
   .w-0 {
     width: 0px;
+  }
+  .w-3 {
+    width: calc(var(--spacing) * 3);
+  }
+  .w-4 {
+    width: calc(var(--spacing) * 4);
   }
   .w-5 {
     width: calc(var(--spacing) * 5);
@@ -542,6 +553,12 @@
   .bg-gray-950 {
     background-color: var(--color-gray-950);
   }
+  .bg-green-800 {
+    background-color: var(--color-green-800);
+  }
+  .bg-red-500 {
+    background-color: var(--color-red-500);
+  }
   .bg-red-900 {
     background-color: var(--color-red-900);
   }
@@ -562,6 +579,9 @@
     @supports (color: color-mix(in lab, red, red)) {
       background-color: color-mix(in oklab, var(--color-white) 10%, transparent);
     }
+  }
+  .bg-yellow-500 {
+    background-color: var(--color-yellow-500);
   }
   .bg-gradient-to-br {
     --tw-gradient-position: to bottom right in oklab;
@@ -631,6 +651,42 @@
   }
   .py-3 {
     padding-block: calc(var(--spacing) * 3);
+  }
+  .pt-0 {
+    padding-top: 0px;
+  }
+  .pt-0\.5 {
+    padding-top: calc(var(--spacing) * 0.5);
+  }
+  .pt-1 {
+    padding-top: var(--spacing);
+  }
+  .pr-0 {
+    padding-right: 0px;
+  }
+  .pr-0\.5 {
+    padding-right: calc(var(--spacing) * 0.5);
+  }
+  .pr-1 {
+    padding-right: var(--spacing);
+  }
+  .pb-0 {
+    padding-bottom: 0px;
+  }
+  .pb-0\.5 {
+    padding-bottom: calc(var(--spacing) * 0.5);
+  }
+  .pb-1 {
+    padding-bottom: var(--spacing);
+  }
+  .pl-0 {
+    padding-left: 0px;
+  }
+  .pl-0\.5 {
+    padding-left: calc(var(--spacing) * 0.5);
+  }
+  .pl-1 {
+    padding-left: var(--spacing);
   }
   .text-center {
     text-align: center;
