@@ -8,7 +8,7 @@ const day = document.getElementById('date');
 const widgetTime = document.getElementById('widget-time');
 const widgetDate = document.getElementById('widget-date');
 
-const TASKBAR_H = 48; // h-12
+const TASKBAR_H = 48; // h-12 in tailwind
 const statuses = [
     "Loading system core...",
     "Initializing desktop environment...",
@@ -22,9 +22,9 @@ const increment = (intervalTime / totalBootTime) * 100;
 
 let activeWindow = null;
 let startX = 0, startY = 0, initialX = 0, initialY = 0;
-let topZ = 100; // windows count up from here
+let topZ = 100;
 
-// ---------- Layering ----------
+// taskbar has to stay above the windows, boot screen above everything
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('taskbar').style.zIndex = 9000;
     bootScreen.style.zIndex = 99999;
@@ -35,7 +35,7 @@ function bringToFront(app) {
     app.style.zIndex = topZ;
 }
 
-// ---------- Start menu ----------
+// start menu
 document.addEventListener('DOMContentLoaded', () => {
     startMenuButton.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// ---------- Boot sequence ----------
+// boot screen
 document.addEventListener('DOMContentLoaded', () => {
     const bootInterval = setInterval(() => {
         progress += increment;
@@ -68,10 +68,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }, intervalTime);
 });
 
-// ---------- show / hide helpers ----------
 function showWin(app) {
     app.classList.remove('hidden');
     app.style.display = '';
+    // some builds ignore the class change, force it
     if (getComputedStyle(app).display === 'none') app.style.display = 'block';
 }
 
@@ -80,7 +80,7 @@ function hideWin(app) {
     app.style.display = '';
 }
 
-// ---------- Window placement (centered on the screen, above the taskbar) ----------
+// plain px instead of the tailwind translate stuff, it kept fighting with dragging
 function placeWindowCenter(app) {
     app.classList.remove('top-1/2', 'left-1/2', 'transform', '-translate-x-1/2', '-translate-y-1/2');
     app.style.transform = 'none';
@@ -94,17 +94,16 @@ function placeWindowCenter(app) {
     app.dataset.placed = 'true';
 }
 
-// ---------- Dragging ----------
+// dragging
 document.addEventListener('DOMContentLoaded', () => {
-    // clicking anywhere on a window brings it to the front
     document.addEventListener('mousedown', (e) => {
         const win = e.target.closest('.main-window');
         if (win) bringToFront(win);
     });
 
     document.addEventListener('mousedown', (e) => {
-        if (e.button !== 0) return;                  // left click only
-        if (e.target.closest('button')) return;      // header buttons are not drag handles
+        if (e.button !== 0) return;
+        if (e.target.closest('button')) return; // dont drag when clicking - [] x
         const header = e.target.closest('.window-header');
         if (!header) return;
 
@@ -127,7 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let left = initialX + (e.clientX - startX);
         let top = initialY + (e.clientY - startY);
 
-        // keep the header reachable
+        // 80 / 30 = enough of the header left on screen to grab it back
         left = Math.min(Math.max(left, 80 - activeWindow.offsetWidth), window.innerWidth - 80);
         top = Math.min(Math.max(top, 0), window.innerHeight - TASKBAR_H - 30);
 
@@ -138,13 +137,12 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('mouseup', () => { activeWindow = null; });
 });
 
-// ---------- Taskbar line under the icon ----------
+// the white line under the taskbar icon
 function setIndicator(appId, on) {
     const ind = document.querySelector(`#taskbar-icons [data-app="${appId}"] .indicator`);
     if (ind) ind.style.opacity = on ? '1' : '0';
 }
 
-// ---------- Open / Close ----------
 function openApp(appId) {
     const app = document.getElementById(appId);
     startMenu.classList.add('hidden');
@@ -154,7 +152,6 @@ function openApp(appId) {
     const wasHidden = app.classList.contains('hidden');
     const wasMinimized = app.dataset.minimized === 'true';
 
-    // already open on screen -> just bring to front
     if (!wasHidden) {
         bringToFront(app);
         return;
@@ -167,7 +164,7 @@ function openApp(appId) {
 
     if (wasMinimized) {
         delete app.dataset.minimized;
-        app.style.visibility = 'hidden'; // hide the real window while the ghost plays
+        app.style.visibility = 'hidden'; // ghost plays instead of the real one
         const g = genieGhost(app, appId);
         if (g) {
             playGhost(app, g, { duration: 500, easing: 'ease-out', direction: 'reverse' },
@@ -188,7 +185,6 @@ function closeApp(appId) {
     setIndicator(appId, false);
 }
 
-// ---------- Maximize / Restore ----------
 function maximize(appId) {
     const app = document.getElementById(appId);
     if (!app || app.dataset.animating === 'true') return;
@@ -199,6 +195,7 @@ function maximize(appId) {
     }
     if (app.dataset.placed !== 'true') placeWindowCenter(app);
 
+    // save the old size so restore can put it back
     app.dataset.prev = JSON.stringify({
         left: app.style.left, top: app.style.top,
         width: app.style.width, height: app.style.height,
@@ -226,8 +223,8 @@ function restorewindow(appId) {
     delete app.dataset.maximized;
 }
 
-// ---------- Genie animation woowww ----------
-// Animates a temporary copy (ghost) of the window so it never fights with your classes.
+// genie animation woowww
+// animating a copy of the window, animating the real one clashed with the tailwind classes
 function genieGhost(app, appId) {
     const icon = document.querySelector(`#taskbar-icons [data-app="${appId}"]`);
     if (!icon) return null;
@@ -248,7 +245,7 @@ function genieGhost(app, appId) {
         `pointer-events:none;z-index:8000;`;
     document.body.appendChild(ghost);
 
-    // every clip-path needs the same number of points so it can interpolate
+    // clip-path only animates if every frame has the same number of points
     const frames = [
         { transform: 'translate(0px,0px) scale(1,1)', opacity: 1,
           clipPath: 'polygon(0% 0%,100% 0%,100% 100%,0% 100%)' },
@@ -260,7 +257,6 @@ function genieGhost(app, appId) {
     return { ghost, frames };
 }
 
-// runs the ghost animation and ALWAYS cleans up, even if the animation gets cancelled
 function playGhost(app, g, options, done) {
     app.dataset.animating = 'true';
     let ended = false;
@@ -274,20 +270,20 @@ function playGhost(app, g, options, done) {
     const anim = g.ghost.animate(g.frames, options);
     anim.onfinish = end;
     anim.oncancel = end;
-    setTimeout(end, options.duration + 200); // safety net
+    setTimeout(end, options.duration + 200); // in case onfinish never fires, app got stuck once
 }
 
 function minimize(appId) {
     const app = document.getElementById(appId);
     if (!app || app.dataset.animating === 'true') return;
 
-    const g = genieGhost(app, appId);   // measure BEFORE hiding
+    const g = genieGhost(app, appId); // has to be measured before hiding
     app.dataset.minimized = 'true';
-    hideWin(app);                       // real window hides, ghost plays instead
+    hideWin(app);
     if (g) playGhost(app, g, { duration: 500, easing: 'ease-in', fill: 'forwards' });
 }
 
-// ---------- Calculator Logic ----------
+// calculator
 function appendtodisplay(value) {
     document.getElementById('calculator-display').value += value;
 }
@@ -313,14 +309,14 @@ function calculate() {
     }
 }
 
-// ---------- Settings App Logic ----------
+// wallpaper
 function setWallpaper(wallpaperUrl) {
     document.body.style.backgroundImage = `url('${wallpaperUrl}')`;
     document.body.style.backgroundSize = 'cover';
     document.body.style.backgroundPosition = 'center';
 }
 
-// ---------- Clock Logic ----------
+// clock
 function updateClock() {
     const now = new Date();
     const hours = now.getHours().toString().padStart(2, '0');
