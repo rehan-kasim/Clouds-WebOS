@@ -125,17 +125,41 @@ function closeApp(appId) {
 }
 
 function maximize(appId) {
-    const app = document.getElementById(appId);
-    if (app) {
-        app.classList.add('fixed', 'inset-0', 'w-full', 'h-full', 'z-50');
+     const app = document.getElementById(appId);
+    if (!app) return;
+    if (app.dataset.maximized === 'true') {
+        minimize(appId);
+        return;
     }
+    app.dataset.prev = JSON.stringify({
+        left: app.style.left,
+        top: app.style.top,
+        width: app.style.width,
+        height: app.style.height,
+        transform: app.style.transform,
+        borderRadius: app.style.borderRadius
+    });
+    app.dataset.maximized = 'true';
+    app.style.left = '0';
+    app.style.top = '0';
+    app.style.width = '100%';
+    app.style.height = 'calc(100% - 3rem)';
+    app.style.transform = 'none';
+    app.style.borderRadius = '0';
 }
+
 
 function minimize(appId) {
     const app = document.getElementById(appId);
-    if (app) {
-        app.classList.remove('fixed', 'inset-0', 'w-full', 'h-full', 'z-50');
-    }
+    if (!app || app.dataset.maximized !== 'true') return;
+    const prev = JSON.parse(app.dataset.prev || '{}');
+    app.style.left = prev.left || '';
+    app.style.top = prev.top || '';
+    app.style.width = prev.width || '';
+    app.style.height = prev.height || '';
+    app.style.transform = prev.transform || '';
+    app.style.borderRadius = prev.borderRadius || '';
+    delete app.dataset.maximized;
 }
 
 // Calculator Logic
