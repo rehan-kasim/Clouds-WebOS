@@ -4,7 +4,7 @@ const bootScreen = document.getElementById('boot-screen');
 const progressBar = document.getElementById('boot-progress');
 const bootStatus = document.getElementById('boot-status');
 const Time = document.getElementById('time');
-const day = document.getElementById('day');
+const day = document.getElementById('date');
 
 const statuses = [
         "Loading system core...",
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             bootScreen.remove();
         }, 100);
-    }, 5000);
+    }, 1000);
 });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -184,4 +184,4 @@ function updateClock() {
     day.textContent = now.toDateString();
 }
 
-updateClock();
+setInterval(updateClock, 1000);

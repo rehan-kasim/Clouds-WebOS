@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clouds A Web OS</title>
+    <title>Clouds</title>
     <link rel="stylesheet" href="output.css">
 </head>
 <body class="h-screen overflow-hidden bg-slate-700 bg-[url('wallpapers/wallpaper1.jpg')] bg-cover bg-center bg-no-repeat text-slate-900 select-none">
@@ -12,14 +12,15 @@
         <!-- Boot Screen Overlay -->
         <div id="boot-screen" class="absolute inset-0 bg-black flex flex-col items-center justify-center text-white z-50 transition-opacity duration-700">
             <div class="text-center">
-                <h1 class="text-3xl font-light tracking-widest mb-4">CLOUDS OS</h1>
+                <img src="icons/Start.svg" alt="Clouds Logo" width="100" height="100">
+                <h1 class="text-3xl font-light tracking-widest mb-4">CLOUDS</h1>
                 <div class="w-48 h-1.5 bg-gray-800 rounded-full overflow-hidden mx-auto">
                     <div id="boot-progress" class="w-0 h-full bg-blue-500 transition-all duration-100 ease-out"></div>
                 </div>
             <p id="boot-status" class="text-xs text-gray-500 mt-3 font-mono">Starting system...</p>
             </div>
         </div>
-        
+
         <!-- Task Bar -->
         <div id="taskbar" class="absolute bottom-0 left-0 w-full h-12 bg-gray-800 flex items-center justify-between px-4 bg-gradient-to-br from-gray-800 to-gray-900 z-40">
             
@@ -59,14 +60,16 @@
             <!-- Taskbar Icons -->
             <div id="taskbar-icons" class="flex space-x-2">
                 <button onclick="openApp('calculator')" class="hover:bg-gray-700 p-1.5 rounded transition">
-                    <img src="icons/calculator-icon.svg" alt="Calculator" class="w-6 h-6">
+                    <img src="icons/calculator-icon.svg" alt="Calculator" class="w-8 h-6">
                 </button>
                 <button onclick="openApp('settings')" class="hover:bg-gray-700 p-1.5 rounded transition">
-                    <img src="icons/settings-icon.svg" alt="Settings" class="w-6 h-6">
+                    <img src="icons/settings-icon.svg" alt="Settings" class="w-8 h-6">
                 </button>
                 <!--Date & Time-->
-                <p id="date" class="text-xs text-gray-400">1 Jan 2026</p>
-                <p id="time" class="text-xs text-gray-400">10:00 AM</p>
+                <div class="hover:border-2 hover:border-gray-600 px-2 py-1 rounded transition flex flex-col items-center border-2 border-gray-800">
+                    <p id="date" class="text-xs text-gray-400">1 Jan 2026</p>
+                    <p id="time" class="text-xs text-gray-400">10:00 AM</p>
+                </div>
             </div>
         </div>
 
