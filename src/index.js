@@ -8,22 +8,34 @@ const day = document.getElementById('date');
 const widgetTime = document.getElementById('widget-time');
 const widgetDate = document.getElementById('widget-date');
 
+const TASKBAR_H = 48; // h-12
 const statuses = [
-        "Loading system core...",
-        "Initializing desktop environment...",
-        "Starting services...",
-        "Welcome"
-    ];
+    "Loading system core...",
+    "Initializing desktop environment...",
+    "Starting services...",
+    "Welcome"
+];
 let progress = 0;
 const totalBootTime = 5000;
 const intervalTime = 50;
 const increment = (intervalTime / totalBootTime) * 100;
-let activeWindow = null;
-let startX = 0;
-let startY = 0;
-let initialX = 0;
-let initialY = 0;
 
+let activeWindow = null;
+let startX = 0, startY = 0, initialX = 0, initialY = 0;
+let topZ = 100; // windows count up from here
+
+// ---------- Layering ----------
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('taskbar').style.zIndex = 9000;
+    bootScreen.style.zIndex = 99999;
+});
+
+function bringToFront(app) {
+    topZ += 1;
+    app.style.zIndex = topZ;
+}
+
+// ---------- Start menu ----------
 document.addEventListener('DOMContentLoaded', () => {
     startMenuButton.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -36,31 +48,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Handle Boot Sequence & Login Screen
-document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(() => {
-        bootScreen.classList.add('opacity-0', 'pointer-events-none');
-        setTimeout(() => {
-            bootScreen.remove();
-        }, 100);
-    }, 1000);
-});
-
+// ---------- Boot sequence ----------
 document.addEventListener('DOMContentLoaded', () => {
     const bootInterval = setInterval(() => {
         progress += increment;
-        
+
         if (progress >= 100) {
             progress = 100;
             clearInterval(bootInterval);
             bootScreen.classList.add('opacity-0', 'pointer-events-none');
-            setTimeout(() => {
-                bootScreen.remove();
-            }, 700);
+            setTimeout(() => bootScreen.remove(), 700);
         }
-        if (progressBar) {
-            progressBar.style.width = `${progress}%`;
-        }
+        if (progressBar) progressBar.style.width = `${progress}%`;
         if (bootStatus) {
             if (progress > 75) bootStatus.textContent = statuses[3];
             else if (progress > 50) bootStatus.textContent = statuses[2];
@@ -69,45 +68,74 @@ document.addEventListener('DOMContentLoaded', () => {
     }, intervalTime);
 });
 
-// App Window Management
+// ---------- show / hide helpers ----------
+function showWin(app) {
+    app.classList.remove('hidden');
+    app.style.display = '';
+    if (getComputedStyle(app).display === 'none') app.style.display = 'block';
+}
 
-// Universal Window Draging FUnction
+function hideWin(app) {
+    app.classList.add('hidden');
+    app.style.display = '';
+}
 
+// ---------- Window placement (centered on the screen, above the taskbar) ----------
+function placeWindowCenter(app) {
+    app.classList.remove('top-1/2', 'left-1/2', 'transform', '-translate-x-1/2', '-translate-y-1/2');
+    app.style.transform = 'none';
+    app.style.translate = 'none';
+    app.style.position = 'fixed';
+
+    const w = app.offsetWidth;
+    const h = app.offsetHeight;
+    app.style.left = Math.max(0, (window.innerWidth - w) / 2) + 'px';
+    app.style.top = Math.max(0, (window.innerHeight - TASKBAR_H - h) / 2) + 'px';
+    app.dataset.placed = 'true';
+}
+
+// ---------- Dragging ----------
 document.addEventListener('DOMContentLoaded', () => {
+    // clicking anywhere on a window brings it to the front
     document.addEventListener('mousedown', (e) => {
+        const win = e.target.closest('.main-window');
+        if (win) bringToFront(win);
+    });
+
+    document.addEventListener('mousedown', (e) => {
+        if (e.button !== 0) return;                  // left click only
+        if (e.target.closest('button')) return;      // header buttons are not drag handles
         const header = e.target.closest('.window-header');
         if (!header) return;
-        activeWindow = header.closest('.main-window') || header.closest('.app-window');
-        if (!activeWindow) return;
-        activeWindow.style.zIndex = 100;
-        // no dragging while maximized
-        if (activeWindow.dataset.maximized === 'true') { activeWindow = null; return; }
+
+        const win = header.closest('.main-window');
+        if (!win || win.dataset.maximized === 'true' || win.dataset.animating === 'true') return;
+
+        if (win.dataset.placed !== 'true') placeWindowCenter(win);
+
+        activeWindow = win;
         startX = e.clientX;
         startY = e.clientY;
-        const rect = activeWindow.getBoundingClientRect();
-        if (activeWindow.classList.contains('transform')) {
-            activeWindow.classList.remove('top-1/2', 'left-1/2', 'transform', '-translate-x-1/2', '-translate-y-1/2');
-            activeWindow.style.left = `${rect.left}px`;
-            activeWindow.style.top = `${rect.top}px`;
-        }
-        initialX = rect.left;
-        initialY = rect.top;
+        initialX = parseFloat(win.style.left) || 0;
+        initialY = parseFloat(win.style.top) || 0;
         e.preventDefault();
     });
 
     document.addEventListener('mousemove', (e) => {
         if (!activeWindow) return;
 
-        const dx = e.clientX - startX;
-        const dy = e.clientY - startY;
+        let left = initialX + (e.clientX - startX);
+        let top = initialY + (e.clientY - startY);
 
-        activeWindow.style.left = `${initialX + dx}px`;
-        activeWindow.style.top = `${initialY + dy}px`;
+        // keep the header reachable
+        left = Math.min(Math.max(left, 80 - activeWindow.offsetWidth), window.innerWidth - 80);
+        top = Math.min(Math.max(top, 0), window.innerHeight - TASKBAR_H - 30);
+
+        activeWindow.style.left = left + 'px';
+        activeWindow.style.top = top + 'px';
     });
 
-    document.addEventListener('mouseup', () => {
-        activeWindow = null;
-    });
+    document.addEventListener('mouseup', () => { activeWindow = null; });
 });
 
 // ---------- Taskbar line under the icon ----------
@@ -119,84 +147,87 @@ function setIndicator(appId, on) {
 // ---------- Open / Close ----------
 function openApp(appId) {
     const app = document.getElementById(appId);
-    if (app && app.dataset.animating !== 'true') {
-        const wasMinimized = app.dataset.minimized === 'true';
+    startMenu.classList.add('hidden');
+    if (!app) { console.error('No window with id:', appId); return; }
+    if (app.dataset.animating === 'true') return;
 
-        app.classList.remove('hidden');
-        app.style.zIndex = 100;
-        setIndicator(appId, true);
+    const wasHidden = app.classList.contains('hidden');
+    const wasMinimized = app.dataset.minimized === 'true';
 
-        if (wasMinimized) {
-            delete app.dataset.minimized;
-            app.style.visibility = 'hidden'; // hide the real window while the ghost plays
-            const g = genieGhost(app, appId);
-            if (g) {
-                app.dataset.animating = 'true';
-                const anim = g.ghost.animate(g.frames, { duration: 500, easing: 'ease-out', direction: 'reverse' });
-                anim.onfinish = () => {
-                    g.ghost.remove();
-                    app.style.visibility = '';
-                    delete app.dataset.animating;
-                };
-            } else {
-                app.style.visibility = '';
-            }
+    // already open on screen -> just bring to front
+    if (!wasHidden) {
+        bringToFront(app);
+        return;
+    }
+
+    showWin(app);
+    if (app.dataset.placed !== 'true') placeWindowCenter(app);
+    bringToFront(app);
+    setIndicator(appId, true);
+
+    if (wasMinimized) {
+        delete app.dataset.minimized;
+        app.style.visibility = 'hidden'; // hide the real window while the ghost plays
+        const g = genieGhost(app, appId);
+        if (g) {
+            playGhost(app, g, { duration: 500, easing: 'ease-out', direction: 'reverse' },
+                () => { app.style.visibility = ''; });
+        } else {
+            app.style.visibility = '';
         }
     }
-    // Close start menu when an app is launched
-    document.getElementById('start-menu').classList.add('hidden');
 }
 
 function closeApp(appId) {
     const app = document.getElementById(appId);
-    if (app) {
-        app.classList.add('hidden');
-        app.style.visibility = '';
-        delete app.dataset.minimized;
-        setIndicator(appId, false);
-    }
+    if (!app) return;
+    hideWin(app);
+    app.style.visibility = '';
+    delete app.dataset.minimized;
+    delete app.dataset.animating;
+    setIndicator(appId, false);
 }
 
 // ---------- Maximize / Restore ----------
 function maximize(appId) {
     const app = document.getElementById(appId);
-    if (!app) return;
+    if (!app || app.dataset.animating === 'true') return;
 
     if (app.dataset.maximized === 'true') {
         restorewindow(appId);
         return;
     }
+    if (app.dataset.placed !== 'true') placeWindowCenter(app);
 
     app.dataset.prev = JSON.stringify({
         left: app.style.left, top: app.style.top,
         width: app.style.width, height: app.style.height,
-        transform: app.style.transform, borderRadius: app.style.borderRadius
+        borderRadius: app.style.borderRadius
     });
     app.dataset.maximized = 'true';
 
-    app.style.left = '0';
-    app.style.top = '0';
+    app.style.left = '0px';
+    app.style.top = '0px';
     app.style.width = '100%';
-    app.style.height = 'calc(100% - 3rem)';
-    app.style.transform = 'none';
+    app.style.height = `calc(100% - ${TASKBAR_H}px)`;
     app.style.borderRadius = '0';
+    bringToFront(app);
 }
 
 function restorewindow(appId) {
     const app = document.getElementById(appId);
     if (!app || app.dataset.maximized !== 'true') return;
     const prev = JSON.parse(app.dataset.prev || '{}');
-    app.style.left = prev.left || '';
-    app.style.top = prev.top || '';
+    app.style.left = prev.left || '0px';
+    app.style.top = prev.top || '0px';
     app.style.width = prev.width || '';
     app.style.height = prev.height || '';
-    app.style.transform = prev.transform || '';
     app.style.borderRadius = prev.borderRadius || '';
     delete app.dataset.maximized;
 }
 
 // ---------- Genie animation woowww ----------
-// makes a temporary copy of the window and animates that, so it never fights with your classes
+// Animates a temporary copy (ghost) of the window so it never fights with your classes.
 function genieGhost(app, appId) {
     const icon = document.querySelector(`#taskbar-icons [data-app="${appId}"]`);
     if (!icon) return null;
@@ -210,11 +241,11 @@ function genieGhost(app, appId) {
     const ghost = app.cloneNode(true);
     ghost.removeAttribute('id');
     ghost.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
-    ghost.classList.remove('hidden');
+    ghost.classList.remove('hidden', 'top-1/2', 'left-1/2', 'transform', '-translate-x-1/2', '-translate-y-1/2');
     ghost.style.cssText =
         `position:fixed;left:${a.left}px;top:${a.top}px;width:${a.width}px;height:${a.height}px;` +
         `margin:0;transform:none;translate:none;border-radius:${radius};` +
-        `pointer-events:none;z-index:200;`;
+        `pointer-events:none;z-index:8000;`;
     document.body.appendChild(ghost);
 
     // every clip-path needs the same number of points so it can interpolate
@@ -229,33 +260,40 @@ function genieGhost(app, appId) {
     return { ghost, frames };
 }
 
+// runs the ghost animation and ALWAYS cleans up, even if the animation gets cancelled
+function playGhost(app, g, options, done) {
+    app.dataset.animating = 'true';
+    let ended = false;
+    const end = () => {
+        if (ended) return;
+        ended = true;
+        g.ghost.remove();
+        delete app.dataset.animating;
+        if (done) done();
+    };
+    const anim = g.ghost.animate(g.frames, options);
+    anim.onfinish = end;
+    anim.oncancel = end;
+    setTimeout(end, options.duration + 200); // safety net
+}
+
 function minimize(appId) {
     const app = document.getElementById(appId);
     if (!app || app.dataset.animating === 'true') return;
 
     const g = genieGhost(app, appId);   // measure BEFORE hiding
-    if (!g) { app.classList.add('hidden'); return; }
-
-    app.dataset.animating = 'true';
     app.dataset.minimized = 'true';
-    app.classList.add('hidden');        // real window hides, ghost plays instead
-
-    const anim = g.ghost.animate(g.frames, { duration: 500, easing: 'ease-in', fill: 'forwards' });
-    anim.onfinish = () => {
-        g.ghost.remove();
-        delete app.dataset.animating;
-    };
+    hideWin(app);                       // real window hides, ghost plays instead
+    if (g) playGhost(app, g, { duration: 500, easing: 'ease-in', fill: 'forwards' });
 }
 
-// Calculator Logic
+// ---------- Calculator Logic ----------
 function appendtodisplay(value) {
-    const display = document.getElementById('calculator-display');
-    display.value += value;
+    document.getElementById('calculator-display').value += value;
 }
 
 function cleardisplay() {
-    const display = document.getElementById('calculator-display');
-    display.value = '';
+    document.getElementById('calculator-display').value = '';
 }
 
 function deleteLastChar() {
@@ -266,9 +304,8 @@ function deleteLastChar() {
 function calculate() {
     const display = document.getElementById('calculator-display');
     if (!display.value) return;
-    
+
     try {
-        // Safely evaluate math expression string
         display.value = Function(`'use strict'; return (${display.value})`)();
     } catch (error) {
         display.value = 'Error';
@@ -276,16 +313,14 @@ function calculate() {
     }
 }
 
-// Settings App Logic
-
-// Wallpaper logic
+// ---------- Settings App Logic ----------
 function setWallpaper(wallpaperUrl) {
     document.body.style.backgroundImage = `url('${wallpaperUrl}')`;
     document.body.style.backgroundSize = 'cover';
     document.body.style.backgroundPosition = 'center';
 }
 
-// Clock Logic
+// ---------- Clock Logic ----------
 function updateClock() {
     const now = new Date();
     const hours = now.getHours().toString().padStart(2, '0');
@@ -297,6 +332,5 @@ function updateClock() {
     widgetDate.textContent = now.toDateString();
 }
 
-// Right Click Functions
-
+updateClock();
 setInterval(updateClock, 1000);
