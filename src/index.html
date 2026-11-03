@@ -52,7 +52,7 @@
 
                 <!-- Pinned Apps Section -->
                 <div class="p-4 border-t border-gray-700">
-                    <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Pinned</h3>
+                    <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Apps</h3>
                     <div class="grid grid-cols-4 gap-2">
                         <div onclick="openApp('calculator')" class="flex flex-col items-center cursor-pointer hover:bg-gray-800 p-2 rounded transition">
                             <img src="icons/calculator-icon.svg" alt="Calculator" class="w-8 h-8 mb-1">
@@ -66,6 +66,10 @@
                             <img src="icons/weather-icon.png" alt="Weather" class="w-8 h-8 mb-1">
                             <span class="text-xs">Weather</span>
                         </div>
+                        <div onclick="openApp('stopwatch-app')" class="flex flex-col items-center cursor-pointer hover:bg-gray-800 p-2 rounded transition">
+                            <img src="icons/stopwatch-icon.svg" alt="Weather" class="w-8 h-8 mb-1">
+                            <span class="text-xs">Stopwatch</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -76,16 +80,16 @@
                     <img src="icons/calculator-icon.svg" alt="Calculator" class="w-8 h-6">
                     <span class="indicator" style="position:absolute;bottom:1px;left:50%;margin-left:-8px;width:16px;height:2px;border-radius:2px;background:#fff;opacity:0;transition:opacity .3s;pointer-events:none;"></span>
                 </button>
+                <button data-app="stopwatch-app" onclick="openApp('stopwatch-app')" class="hover:bg-gray-700 p-1.5 rounded transition" style="position:relative;">
+                    <img src="icons/stopwatch-icon.svg" alt="stopwatch" class="w-6 h-6">
+                    <span class="indicator" style="position:absolute;bottom:1px;left:50%;margin-left:-8px;width:16px;height:2px;border-radius:2px;background:#fff;opacity:0;transition:opacity .3s;pointer-events:none;"></span>
+                </button>
                 <button data-app="settings" onclick="openApp('settings')" class="hover:bg-gray-700 p-1.5 rounded transition" style="position:relative;">
                     <img src="icons/settings-icon.svg" alt="Settings" class="w-8 h-6">
                     <span class="indicator" style="position:absolute;bottom:1px;left:50%;margin-left:-8px;width:16px;height:2px;border-radius:2px;background:#fff;opacity:0;transition:opacity .3s;pointer-events:none;"></span>
                 </button>
                 <button data-app="weather-app" onclick="openApp('weather-app')" class="hover:bg-gray-700 p-1.5 rounded transition" style="position:relative;">
                     <img src="icons/weather-icon.png" alt="Weather" class="w-6 h-6">
-                    <span class="indicator" style="position:absolute;bottom:1px;left:50%;margin-left:-8px;width:16px;height:2px;border-radius:2px;background:#fff;opacity:0;transition:opacity .3s;pointer-events:none;"></span>
-                </button>
-                <button data-app="stopwatch-app" onclick="openApp('stopwatch-app')" class="hover:bg-gray-700 p-1.5 rounded transition" style="position:relative;">
-                    <img src="icons/settings-icon.svg" alt="stopwatch-app" class="w-8 h-6">
                     <span class="indicator" style="position:absolute;bottom:1px;left:50%;margin-left:-8px;width:16px;height:2px;border-radius:2px;background:#fff;opacity:0;transition:opacity .3s;pointer-events:none;"></span>
                 </button>
                 <!--Date & Time Alawys in the last-->
