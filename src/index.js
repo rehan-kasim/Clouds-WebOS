@@ -161,6 +161,9 @@ function openApp(appId) {
     if (app.dataset.placed !== 'true') placeWindowCenter(app);
     bringToFront(app);
     setIndicator(appId, true);
+     bringToFront(app);
+    setIndicator(appId, true);
+    if (appId === 'weather-app') loadWeather();
 
     if (wasMinimized) {
         delete app.dataset.minimized;
@@ -183,6 +186,7 @@ function closeApp(appId) {
     delete app.dataset.minimized;
     delete app.dataset.animating;
     setIndicator(appId, false);
+
 }
 
 function maximize(appId) {
@@ -328,5 +332,64 @@ function updateClock() {
     widgetDate.textContent = now.toDateString();
 }
 
-updateClock();
+// weather app logic
+
+const ApiKey = '1d67ecf8acbc6348a362b908df6b380c';
+const city = document.getElementById('CityName');
+const temp = document.getElementById('temperatureinfo');
+const humidity = document.getElementById('humidityinfo');
+const sky = document.getElementById('skyinfo');
+const emoji = document.getElementById('emojiinfo');
+const WEATHER_EVERY = 10 * 60 * 1000;
+let lastWeather = 0;
+
+function weatherEmoji(main, icon) {
+    const night = icon.endsWith('n');
+    if (main === 'Clear') return night ? '🌙' : '🌞';
+    if (main === 'Clouds') return '☁️';
+    if (main === 'Rain') return '🌧️';
+    if (main === 'Drizzle') return '🌦️';
+    if (main === 'Thunderstorm') return '⛈️';
+    if (main === 'Snow') return '❄️';
+    return '🌫️'; // mist, haze, smoke, dust etc
+}
+
+async function getLocation() {
+    try {
+        const res = await fetch('https://ipwho.is/');
+        const data = await res.json();
+        if (data.success) return { lat: data.latitude, lon: data.longitude };
+    } catch (err) {
+        console.log('ip lookup failed, using delhi');
+    }
+    return { lat: 28.61, lon: 77.21 };
+}
+
+async function loadWeather() {
+    if (Date.now() - lastWeather < WEATHER_EVERY) return;
+    lastWeather = Date.now(); // set early so a double click doesnt send two requests
+ 
+    city.textContent = 'Loading...';
+ 
+    try {
+        const loc = await getLocation();
+        const url = `https://api.openweathermap.org/data/2.5/weather?lat=${loc.lat}&lon=${loc.lon}&units=metric&appid=${ApiKey}`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('openweather said ' + res.status);
+        const data = await res.json();
+ 
+        city.textContent = data.name;
+        temp.textContent = `${Math.round(data.main.temp)}°C`;
+        humidity.textContent = `Humidity: ${data.main.humidity}%`;
+        sky.textContent = `Sky: ${data.weather[0].main}`;
+        emoji.textContent = weatherEmoji(data.weather[0].main, data.weather[0].icon);
+    } catch (err) {
+        console.log('weather failed:', err);
+        lastWeather = 0; // let the next open try again
+        city.textContent = 'No data';
+        sky.textContent = "Couldn't load weather";
+    }
+}
+
+updateClock(); // Initial call to set the clock immediately
 setInterval(updateClock, 1000);
