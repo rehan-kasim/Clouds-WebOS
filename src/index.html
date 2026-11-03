@@ -96,7 +96,15 @@
         <div id="apps">
             <!--Stopwatch app-->
             <div id="stopwatch-app" class="main-window hidden flex flex-col absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 bg-gray-900/95 backdrop-blur-md rounded-xl shadow-2xl border border-gray-700 text-white z-30 overflow-hidden">
-                
+                <!--Header-->
+                <div class="window-header flex justify-between items-center px-3 py-2 bg-gray-800/80 border-b border-gray-700 cursor-move">
+                    <span class="text-xs font-semibold text-gray-300">StopWatch</span>
+                    <div class="flex items-center space-x-2 text-xs">
+                        <button onclick="minimize('stopwatch-app')" class="hover:bg-gray-700 px-2 py-0.5 rounded text-gray-400 hover:text-white">-</button>
+                        <button onclick="maximize('stopwatch-app')" class="hover:bg-gray-700 px-2 py-0.5 rounded text-gray-400 hover:text-white">□</button>
+                        <button onclick="closeApp('stopwatch-app')" class="hover:bg-red-600 px-2 py-0.5 rounded text-gray-400 hover:text-white">✕</button>
+                    </div>
+                </div>
             </div>
             <!--Weather App-->
             <div id="weather-app" class="main-window hidden flex flex-col absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 bg-gray-900/95 backdrop-blur-md rounded-xl shadow-2xl border border-gray-700 text-white z-30 overflow-hidden">
