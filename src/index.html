@@ -23,23 +23,25 @@
 
         <!--widgets-->
         <!--clock widget-->
-        <div class="rounded-lg font-redaction w-80 h-40 bg-white/10 backdrop-blur-xl absolute top-4 left-4 flex flex-col items-center justify-center p-4 z-40 transition hover:bg-white/20">
+        <div class="rounded-lg font-redaction w-80 h-35 bg-white/10 backdrop-blur-xl absolute top-4 left-4 flex flex-col items-center justify-center p-4 z-40 transition hover:bg-white/20">
             <p id="widget-date" class="text-4xl text-white">1 Jan 2026</p>
             <p id="widget-time" class="text-4xl text-white">10:00 AM</p>
+        </div>
+        <div class="rounded-lg font-redaction w-80 h-30 mt-[150px] bg-white/10 backdrop-blur-xl absolute top-4 left-4 flex flex-col items-center justify-center p-4 z-40 transition hover:bg-white/20">
             <p id="widget-city" class="text-2xl text-white">delhi</p>
             <p id="widget-temp" class="text-2xl text-white">10 C</p>
         </div>
 
         <!-- Task Bar -->
-        <div id="taskbar" class="absolute bottom-0 left-0 w-full h-12 bg-gray-800 flex items-center justify-between px-4 bg-gradient-to-br from-gray-800 to-gray-900 z-40">
+        <div id="taskbar" class="absolute bottom-0 left-0 w-full h-12 bg-white/0 flex items-center justify-between px-4z-40">
             
             <!-- Start Button -->
-            <div id="start-menu-button" class="text-white cursor-pointer border border-gray-600 rounded-full px-2.5 py-1.5 hover:bg-gray-700 transition">
+            <div id="start-menu-button" class="text-white cursor-pointer border border-gray-600 rounded-full ml-[10px] px-2.5 py-1.5 hover:bg-gray-700 transition">
                 <img src="icons/Start.svg" alt="Start" class="h-5 w-5">
             </div>
 
             <!-- Start Menu -->
-            <div id="start-menu" class="hidden absolute bottom-14 left-4 w-72 bg-gray-900/95 backdrop-blur-md rounded-xl shadow-2xl border border-gray-700 text-white overflow-hidden z-50">
+            <div id="start-menu" class="hidden absolute bottom-14 left-4 w-72 bg-white/10 backdrop-blur-md rounded-xl shadow-2xl border border-gray-700 text-white overflow-hidden z-50">
                 <div class="p-4 border-b border-gray-700">
                     <h2 class="text-lg font-semibold">Clouds OS</h2>
                     <p class="text-xs text-gray-400">Welcome back!</p>
@@ -47,7 +49,7 @@
                 
                 <!-- Search Bar -->
                 <div class="p-4">
-                    <input type="text" placeholder="Search..." class="w-full bg-gray-800 text-gray-200 placeholder:text-gray-500 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <input type="text" placeholder="Search..." class="w-full bg-white/10 text-gray-200 placeholder:text-gray-500 border border-gray-600 rounded px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
 
                 <!-- Apps Section -->
@@ -75,25 +77,25 @@
             </div>
 
             <!-- Taskbar Icons -->
-            <div id="taskbar-icons" class="flex space-x-2">
-                <button data-app="calculator" onclick="openApp('calculator')" class="hover:bg-gray-700 p-1.5 rounded transition" style="position:relative;">
+            <div id="taskbar-icons" class="flex space-x-2 bg-white/10 backdrop-blur-md rounded-lg px-2 py-1">
+                <button data-app="calculator" onclick="openApp('calculator')" class="hover:bg-gray-700/90 p-1.5 rounded transition" style="position:relative;">
                     <img src="icons/calculator-icon.svg" alt="Calculator" class="w-8 h-6">
                     <span class="indicator" style="position:absolute;bottom:1px;left:50%;margin-left:-8px;width:16px;height:2px;border-radius:2px;background:#fff;opacity:0;transition:opacity .3s;pointer-events:none;"></span>
                 </button>
-                <button data-app="stopwatch-app" onclick="openApp('stopwatch-app')" class="hover:bg-gray-700 p-1.5 rounded transition" style="position:relative;">
+                <button data-app="stopwatch-app" onclick="openApp('stopwatch-app')" class="hover:bg-gray-700/90 p-1.5 rounded transition" style="position:relative;">
                     <img src="icons/stopwatch-icon.svg" alt="stopwatch" class="w-8 h-6">
                     <span class="indicator" style="position:absolute;bottom:1px;left:50%;margin-left:-8px;width:16px;height:2px;border-radius:2px;background:#fff;opacity:0;transition:opacity .3s;pointer-events:none;"></span>
                 </button>
-                <button data-app="settings" onclick="openApp('settings')" class="hover:bg-gray-700 p-1.5 rounded transition" style="position:relative;">
+                <button data-app="settings" onclick="openApp('settings')" class="hover:bg-gray-700/90 p-1.5 rounded transition" style="position:relative;">
                     <img src="icons/settings-icon.svg" alt="Settings" class="w-8 h-6">
                     <span class="indicator" style="position:absolute;bottom:1px;left:50%;margin-left:-8px;width:16px;height:2px;border-radius:2px;background:#fff;opacity:0;transition:opacity .3s;pointer-events:none;"></span>
                 </button>
-                <button data-app="weather-app" onclick="openApp('weather-app')" class="hover:bg-gray-700 p-1.5 rounded transition" style="position:relative;">
+                <button data-app="weather-app" onclick="openApp('weather-app')" class="hover:bg-gray-700/90 p-1.5 rounded transition" style="position:relative;">
                     <img src="icons/weather-icon.svg" alt="Weather" class="w-8 h-6">
                     <span class="indicator" style="position:absolute;bottom:1px;left:50%;margin-left:-8px;width:16px;height:2px;border-radius:2px;background:#fff;opacity:0;transition:opacity .3s;pointer-events:none;"></span>
                 </button>
                 <!--Date & Time Alawys in the last-->
-                <div class="hover:border-2 hover:border-gray-600 px-2 py-1 rounded transition flex flex-col items-center border-2 border-gray-800">
+                <div class="hover:border-2 hover:border-gray-600 px-2 py-1 rounded transition flex flex-col items-center border-2 border-gray-600">
                     <p id="date" class="date text-xs text-gray-400">1 Jan 2026</p>
                     <p id="time" class="time text-xs text-gray-400">10:00 AM</p>
                 </div>
