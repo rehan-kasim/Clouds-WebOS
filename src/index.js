@@ -126,7 +126,6 @@ document.addEventListener('DOMContentLoaded', () => {
         let left = initialX + (e.clientX - startX);
         let top = initialY + (e.clientY - startY);
 
-        // 80 / 30 = enough of the header left on screen to grab it back
         left = Math.min(Math.max(left, 80 - activeWindow.offsetWidth), window.innerWidth - 80);
         top = Math.min(Math.max(top, 0), window.innerHeight - TASKBAR_H - 30);
 
@@ -160,9 +159,10 @@ function openApp(appId) {
     if (app.dataset.placed !== 'true') placeWindowCenter(app);
     bringToFront(app);
     setIndicator(appId, true);
-     bringToFront(app);
+    bringToFront(app);
     setIndicator(appId, true);
-    if (appId === 'weather-app') loadWeather();
+    if (appId == 'weather-app')
+        loadWeather();
 
     if (wasMinimized) {
         delete app.dataset.minimized;
@@ -329,17 +329,19 @@ function updateClock() {
 }
 
 // weather app logic
-
 const ApiKey = '1d67ecf8acbc6348a362b908df6b380c';
 const city = document.getElementById('CityName');
 const temp = document.getElementById('temperatureinfo');
-const humidity = document.getElementById('h(umidityinfo');
+const humidity = document.getElementById('humidityinfo');
 const sky = document.getElementById('skyinfo');
-const emoji = document.getElementById('emoj(iinfo');
-const widgetcity = document.getElementById("widget-city");
-const widgettemp = document.getElementById("widget-temp");
+const emoji = document.getElementById('emojiinfo');
+const widgetcity = document.getElementById('widget-city');
+const widgettemp = document.getElementById('widget-temp');
 const WEATHER_EVERY = 10 * 60 * 1000;
+
 let lastWeather = 0;
+let weatherData = null;   // cached last response
+let weatherLoading = false;
 
 function weatherEmoji(main, icon) {
     const night = icon.endsWith('n');
@@ -349,7 +351,7 @@ function weatherEmoji(main, icon) {
     if (main === 'Drizzle') return '🌦️';
     if (main === 'Thunderstorm') return '⛈️';
     if (main === 'Snow') return '❄️';
-    return '🌫️'; // mist, haze, smoke, dust etc
+    return '🌫️';
 }
 
 async function getLocation() {
@@ -363,57 +365,44 @@ async function getLocation() {
     return { lat: 28.61, lon: 77.21 };
 }
 
+// draws the data into BOTH the widget and the app window
+function renderWeather(data) {
+    const t = `${Math.round(data.main.temp)}°C`;
+    widgetcity.textContent = data.name;
+    widgettemp.textContent = t;
+    city.textContent = data.name;
+    temp.textContent = t;
+    humidity.textContent = `Humidity: ${data.main.humidity}%`;
+    sky.textContent = `Sky: ${data.weather[0].main}`;
+    emoji.textContent = weatherEmoji(data.weather[0].main, data.weather[0].icon);
+}
+
 async function loadWeather() {
-    if (Date.now() - lastWeather < WEATHER_EVERY) return;
-    lastWeather = Date.now();
- 
+    if (weatherData && Date.now() - lastWeather < WEATHER_EVERY) {
+        renderWeather(weatherData);
+        return;
+    }
+    if (weatherLoading) return;
+    weatherLoading = true;
     city.textContent = 'Loading...';
- 
+
     try {
         const loc = await getLocation();
         const url = `https://api.openweathermap.org/data/2.5/weather?lat=${loc.lat}&lon=${loc.lon}&units=metric&appid=${ApiKey}`;
         const res = await fetch(url);
         if (!res.ok) throw new Error('openweather said ' + res.status);
-        const data = await res.json();
- 
-        city.textContent = data.name;
-        widgetcity.textContent = data.name;
-        temp.textContent = `${Math.round(data.main.temp)}°C`;
-        widgettemp.textContent = `${Math.round(data.main.temp)}°C`;
-        humidity.textContent = `Humidity: ${data.main.humidity}%`;
-        sky.textContent = `Sky: ${data.weather[0].main}`;
-        emoji.textContent = weatherEmoji(data.weather[0].main, data.weather[0].icon);
+        weatherData = await res.json();
+        lastWeather = Date.now();
+        renderWeather(weatherData);
     } catch (err) {
         console.log('weather failed:', err);
-        lastWeather = 0; // let the next open try again
         city.textContent = 'No data';
         sky.textContent = "Couldn't load weather";
-    }
-}
-
-async function loadWeather_widget() {
-    if (Date.now() - lastWeather < WEATHER_EVERY) return;
-    lastWeather = Date.now();
- 
-    city.textContent = 'Loading...';
- 
-    try {
-        const loc = await getLocation();
-        const url = `https://api.openweathermap.org/data/2.5/weather?lat=${loc.lat}&lon=${loc.lon}&units=metric&appid=${ApiKey}`;
-        const res = await fetch(url);
-        if (!res.ok) throw new Error('openweather said ' + res.status);
-        const data = await res.json();
- 
-        widgetcity.textContent = data.name;
-        widgettemp.textContent = `${Math.round(data.main.temp)}°C`;
-    }
-    catch (err) {
-        console.log('weather failed:', err);
-        lastWeather = 0; // let the next open try again
         widgetcity.textContent = 'No data';
+    } finally {
+        weatherLoading = false;
     }
 }
-
 // stopwatch logic
 const stopwatchtime = document.getElementById('stopwatch-time');
 const stopwatchstart = document.getElementById('stopwatch-start');
@@ -451,7 +440,6 @@ stopwatchreset.onclick = function() {
     showStopwatch();
 };
 
-
-loadWeather_widget();
+loadWeather();
 updateClock(); // Initial call to set the clock immediately
 setInterval(updateClock, 1000);
