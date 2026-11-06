@@ -440,6 +440,21 @@ stopwatchreset.onclick = function() {
     showStopwatch();
 };
 
+// browser logic
+const browserFrame = document.getElementById('browser-frame');
+const browserUrlInput = document.getElementById('browser-url');
+
+function go_to_url(url) {
+    urltogo = browserUrlInput.value.trim();
+    browserFrame.src = urltogo;
+}
+
+function refresh_browser() {
+    browserFrame.src = browserFrame.src;
+}
+
+
+
 loadWeather();
 updateClock(); // Initial call to set the clock immediately
 setInterval(updateClock, 1000);

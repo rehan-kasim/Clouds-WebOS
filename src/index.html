@@ -83,6 +83,11 @@
                     <img src="icons/calculator-icon.svg" alt="Calculator" class="w-8 h-6">
                     <span class="indicator" style="position:absolute;bottom:1px;left:50%;margin-left:-8px;width:16px;height:2px;border-radius:2px;background:#fff;opacity:0;transition:opacity .3s;pointer-events:none;"></span>
                 </button>
+                <button data-app="browser-app" onclick="openApp('browser-app')" class="hover:bg-gray-700/90 p-1.5 rounded transition" style="position:relative;">
+                    <img src="icons/browser-icon.svg" alt="Browser" class="w-8 h-6">
+                    <span class="indicator" style="position:absolute;bottom:1px;left:50%;margin-left:-8px;width:16px;height:2px;border-radius:2px;background:#fff;opacity:0;transition:opacity .3s;pointer-events:none;"></span>
+                </button>
+                </button>
                 <button data-app="stopwatch-app" onclick="openApp('stopwatch-app')" class="hover:bg-gray-700/90 p-1.5 rounded transition" style="position:relative;">
                     <img src="icons/stopwatch-icon.svg" alt="stopwatch" class="w-8 h-6">
                     <span class="indicator" style="position:absolute;bottom:1px;left:50%;margin-left:-8px;width:16px;height:2px;border-radius:2px;background:#fff;opacity:0;transition:opacity .3s;pointer-events:none;"></span>
@@ -105,9 +110,26 @@
 
         <!-- Apps Workspace -->
         <div id="apps">
-            <!--Browser app-->
-            <div id="browser-app" class="main-window hidden flex flex-col absolute top-1/2 left-1/2 transfrom -translate-x-1/2">
-                
+            <!--browser app-->
+            <div id="browser-app" class="main-window hidden flex flex-col absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-900/95 backdrop-blur-md rounded-xl shadow-2xl border border-gray-700 text-white z-30 overflow-hidden" style="width:720px;height:460px;">
+                <!--Header-->
+                <div class="window-header flex justify-between items-center px-3 py-2 bg-gray-800/80 border-b border-gray-700 cursor-move">
+                    <span class="text-xs font-semibold text-gray-300">Browser</span>
+                    <div class="flex items-center space-x-2 text-xs">
+                        <button onclick="minimize('browser-app')" class="hover:bg-gray-700 px-2 py-0.5 rounded text-gray-400 hover:text-white">-</button>
+                        <button onclick="maximize('browser-app')" class="hover:bg-gray-700 px-2 py-0.5 rounded text-gray-400 hover:text-white">□</button>
+                        <button onclick="closeApp('browser-app')" class="hover:bg-red-600 px-2 py-0.5 rounded text-gray-400 hover:text-white">✕</button>
+                    </div>
+                </div>
+                <!--Body-->
+                <div class="font-redaction flex flex-col flex-1 min-h-0 gap-2 bg-gray-700 p-2">
+                    <div class="flex items-center gap-2">
+                        <button id="browser-refresh" onclick="refresh_browser()" title="Refresh" class="bg-gray-600 hover:bg-gray-500 px-2.5 py-1 rounded text-sm">⟳</button>
+                        <input id="browser-url" type="text" placeholder="Search or enter url" class="flex-1 min-w-0 bg-gray-900 text-gray-200 placeholder:text-gray-500 border border-gray-600 rounded px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <button id="browser-go" onclick="go_to_url()" class="bg-blue-600 hover:bg-blue-500 px-3 py-1 rounded text-sm">Go</button>
+                    </div>
+                    <iframe id="browser-frame" src="https://www.google.com/search?&igu=1" class="flex-1 w-full bg-white rounded" style="border:0;"></iframe>
+                </div>
             </div>
             <!--Stopwatch app-->
             <div id="stopwatch-app" class="main-window hidden flex flex-col absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 bg-gray-900/95 backdrop-blur-md rounded-xl shadow-2xl border border-gray-700 text-white z-30 overflow-hidden">
