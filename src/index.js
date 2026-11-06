@@ -8,7 +8,7 @@ const day = document.getElementById('date');
 const widgetTime = document.getElementById('widget-time');
 const widgetDate = document.getElementById('widget-date');
 
-const TASKBAR_H = 48; // h-12 in tailwind
+const TASKBAR_H = 56;
 const statuses = [
     "Loading system core...",
     "Initializing desktop environment...",
@@ -113,6 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (win.dataset.placed !== 'true') placeWindowCenter(win);
 
         activeWindow = win;
+        document.querySelectorAll('iframe').forEach(f => f.style.pointerEvents = 'none');
         startX = e.clientX;
         startY = e.clientY;
         initialX = parseFloat(win.style.left) || 0;
@@ -133,7 +134,10 @@ document.addEventListener('DOMContentLoaded', () => {
         activeWindow.style.top = top + 'px';
     });
 
-    document.addEventListener('mouseup', () => { activeWindow = null; });
+    document.addEventListener('mouseup', () => {
+    activeWindow = null;
+    document.querySelectorAll('iframe').forEach(f => f.style.pointerEvents = '');
+});
 });
 
 function setIndicator(appId, on) {
@@ -239,6 +243,7 @@ function genieGhost(app, appId) {
     const ghost = app.cloneNode(true);
     ghost.removeAttribute('id');
     ghost.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+    ghost.querySelectorAll('iframe').forEach(f => f.remove());
     ghost.classList.remove('hidden', 'top-1/2', 'left-1/2', 'transform', '-translate-x-1/2', '-translate-y-1/2');
     ghost.style.cssText =
         `position:fixed;left:${a.left}px;top:${a.top}px;width:${a.width}px;height:${a.height}px;` +
