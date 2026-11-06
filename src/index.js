@@ -458,6 +458,36 @@ function refresh_browser() {
     browserFrame.src = browserFrame.src;
 }
 
+// right click menu logic
+const rightClickMenu = document.getElementById('right-click-menu');
+
+function hideRightClickMenu() {
+    rightClickMenu.classList.add('hidden');
+}
+
+function showRightClickMenu(x, y) {
+    rightClickMenu.style.left = `${x}px`;
+    rightClickMenu.style.top = `${y}px`;
+    rightClickMenu.classList.remove('hidden');
+}
+
+document.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+    showRightClickMenu(e.clientX, e.clientY);
+});
+
+document.addEventListener('click', (e) => {
+    if (!rightClickMenu.contains(e.target)) {
+        hideRightClickMenu();
+    }
+});
+
+function changewallpaperrandom() {
+    let wallpapers = ['wallpapers/wallpaper1.jpg', 'wallpapers/wallpaper2.jpg', 'wallpapers/wallpaper3.jpg',"wallpaper/wallpaper4.jpg","wallpaper/wallpaper5.jpg","wallpaper/wallpaper6.jpg","wallpaper/wallpaper7.jpg","wallpaper/wallpaper8.jpg","wallpaper/wallpaper9.jpg","wallpaper/wallpaper10.png"];
+    const rand_num = Math.floor(Math.random() * 10);
+    wall = wallpapers[rand_num];
+    setWallpaper(wall);
+}
 
 
 loadWeather();
