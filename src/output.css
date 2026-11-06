@@ -19,6 +19,7 @@
     --color-blue-400: oklch(70.7% 0.165 254.624);
     --color-blue-500: oklch(62.3% 0.214 259.815);
     --color-blue-600: oklch(54.6% 0.245 262.881);
+    --color-blue-950: oklch(28.2% 0.091 267.935);
     --color-slate-700: oklch(37.2% 0.044 257.287);
     --color-slate-900: oklch(20.8% 0.042 265.755);
     --color-gray-200: oklch(92.8% 0.006 264.531);
@@ -59,12 +60,12 @@
     --ease-out: cubic-bezier(0, 0, 0.2, 1);
     --blur-md: 12px;
     --blur-xl: 24px;
-    --blur-2xl: 40px;
     --default-transition-duration: 150ms;
     --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
     --default-font-family: var(--font-sans);
     --default-mono-font-family: var(--font-mono);
     --font-redaction: "Redaction 50", sans-serif;
+    --animate-enlarge: enlarge 0.2s ease-in-out forwards;
   }
 }
 @layer base {
@@ -243,6 +244,9 @@
   .bottom-14 {
     bottom: calc(var(--spacing) * 14);
   }
+  .bottom-\[8px\] {
+    bottom: 8px;
+  }
   .left-0 {
     left: 0px;
   }
@@ -251,6 +255,9 @@
   }
   .left-4 {
     left: calc(var(--spacing) * 4);
+  }
+  .left-\[5px\] {
+    left: 5px;
   }
   .z-30 {
     z-index: 30;
@@ -275,6 +282,12 @@
   }
   .mt-\[150px\] {
     margin-top: 150px;
+  }
+  .mr-1 {
+    margin-right: var(--spacing);
+  }
+  .mr-1\.5 {
+    margin-right: calc(var(--spacing) * 1.5);
   }
   .mb-1 {
     margin-bottom: var(--spacing);
@@ -729,9 +742,15 @@
     color: var(--color-gray-500);
   }
   @media (hover: hover) {
+    .hover\:animate-enlarge:hover {
+      animation: var(--animate-enlarge);
+    }
     .hover\:border-2:hover {
       border-style: var(--tw-border-style);
       border-width: 2px;
+    }
+    .hover\:border-blue-950:hover {
+      border-color: var(--color-blue-950);
     }
     .hover\:border-gray-600:hover {
       border-color: var(--color-gray-600);
@@ -744,6 +763,14 @@
     }
     .hover\:bg-gray-700:hover {
       background-color: var(--color-gray-700);
+    }
+    .hover\:bg-gray-700\/10:hover {
+      background-color: color-mix(in srgb, oklch(37.3% 0.034 259.733) 10%, transparent);
+    }
+    @supports (color: color-mix(in lab, red, red)) {
+      .hover\:bg-gray-700\/10:hover {
+        background-color: color-mix(in oklab, var(--color-gray-700) 10%, transparent);
+      }
     }
     .hover\:bg-gray-700\/90:hover {
       background-color: color-mix(in srgb, oklch(37.3% 0.034 259.733) 90%, transparent);
@@ -767,6 +794,14 @@
         background-color: color-mix(in oklab, var(--color-red-800) 60%, transparent);
       }
     }
+    .hover\:bg-white\/10:hover {
+      background-color: color-mix(in srgb, #fff 10%, transparent);
+    }
+    @supports (color: color-mix(in lab, red, red)) {
+      .hover\:bg-white\/10:hover {
+        background-color: color-mix(in oklab, var(--color-white) 10%, transparent);
+      }
+    }
     .hover\:bg-white\/20:hover {
       background-color: color-mix(in srgb, #fff 20%, transparent);
     }
@@ -780,6 +815,16 @@
     }
     .hover\:underline:hover {
       text-decoration-line: underline;
+    }
+    .hover\:backdrop-blur-md:hover {
+      --tw-backdrop-blur: blur(var(--blur-md));
+      -webkit-backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
+      backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
+    }
+    .hover\:not-first-of-type\:backdrop-blur-md:hover:not(:first-of-type) {
+      --tw-backdrop-blur: blur(var(--blur-md));
+      -webkit-backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
+      backdrop-filter: var(--tw-backdrop-blur,) var(--tw-backdrop-brightness,) var(--tw-backdrop-contrast,) var(--tw-backdrop-grayscale,) var(--tw-backdrop-hue-rotate,) var(--tw-backdrop-invert,) var(--tw-backdrop-opacity,) var(--tw-backdrop-saturate,) var(--tw-backdrop-sepia,);
     }
   }
   .focus\:ring-2:focus {
@@ -955,6 +1000,14 @@
 @property --tw-ease {
   syntax: "*";
   inherits: false;
+}
+@keyframes enlarge {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.2);
+  }
 }
 @layer properties {
   @supports ((-webkit-hyphens: none) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color:rgb(from red r g b)))) {

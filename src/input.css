@@ -3,4 +3,13 @@
 
 @theme {
   --font-redaction: "Redaction 50", sans-serif; 
+  --animate-enlarge: enlarge 0.2s ease-in-out forwards;
+  @keyframes enlarge {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1.2);
+    }
+  }
 }

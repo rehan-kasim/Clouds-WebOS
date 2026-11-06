@@ -34,7 +34,7 @@
         </div>
 
         <!-- Task Bar -->
-        <div id="taskbar" class="absolute bottom-0 left-0 w-full h-12 bg-white/0 flex items-center justify-between px-4z-40">
+        <div id="taskbar" class="absolute bottom-[8px] w-full h-12 bg-white/0 flex items-center justify-between px-4z-40">
             
             <!-- Start Button -->
             <div id="start-menu-button" class="text-white cursor-pointer border border-gray-600 rounded-full ml-[10px] px-2.5 py-1.5 hover:bg-gray-700 transition">
@@ -78,33 +78,33 @@
             </div>
 
             <!-- Taskbar Icons -->
-            <div id="taskbar-icons" class="flex space-x-2 bg-white/10 backdrop-blur-md rounded-lg px-2 py-1">
-                <button data-app="calculator" onclick="openApp('calculator')" class="hover:bg-gray-700/90 p-1.5 rounded transition" style="position:relative;">
+            <div id="taskbar-icons" class="flex space-x-2 mr-1.5 bg-white/10 backdrop-blur-md rounded-lg px-2 py-1">
+                <button data-app="calculator" onclick="openApp('calculator')" class="hover:bg-white/10 hover:backdrop-blur-md p-1.5 hover:animate-enlarge rounded transition" style="position:relative;">
                     <img src="icons/calculator-icon.svg" alt="Calculator" class="w-8 h-6">
                     <span class="indicator" style="position:absolute;bottom:1px;left:50%;margin-left:-8px;width:16px;height:2px;border-radius:2px;background:#fff;opacity:0;transition:opacity .3s;pointer-events:none;"></span>
                 </button>
-                <button data-app="browser-app" onclick="openApp('browser-app')" class="hover:bg-gray-700/90 p-1.5 rounded transition" style="position:relative;">
+                <button data-app="browser-app" onclick="openApp('browser-app')" class="hover:bg-white/10 hover:backdrop-blur-md p-1.5 hover:animate-enlarge rounded transition" style="position:relative;">
                     <img src="icons/browser-icon.svg" alt="Browser" class="w-8 h-6">
                     <span class="indicator" style="position:absolute;bottom:1px;left:50%;margin-left:-8px;width:16px;height:2px;border-radius:2px;background:#fff;opacity:0;transition:opacity .3s;pointer-events:none;"></span>
                 </button>
-                <button data-app="about-app" onclick="openApp('about-app')" class="hover:bg-gray-700/90 p-1.5 rounded transition" style="position:relative;">
+                <button data-app="about-app" onclick="openApp('about-app')" class="hover:bg-white/10 hover:backdrop-blur-md p-1.5 hover:animate-enlarge rounded transition" style="position:relative;">
                     <img src="icons/about-icon.svg" alt="About" class="w-8 h-6">
                     <span class="indicator" style="position:absolute;bottom:1px;left:50%;margin-left:-8px;width:16px;height:2px;border-radius:2px;background:#fff;opacity:0;transition:opacity .3s;pointer-events:none;"></span>
                 </button>
-                <button data-app="stopwatch-app" onclick="openApp('stopwatch-app')" class="hover:bg-gray-700/90 p-1.5 rounded transition" style="position:relative;">
+                <button data-app="stopwatch-app" onclick="openApp('stopwatch-app')" class="hover:bg-white/10 hover:backdrop-blur-md p-1.5 hover:animate-enlarge rounded transition" style="position:relative;">
                     <img src="icons/stopwatch-icon.svg" alt="stopwatch" class="w-8 h-6">
                     <span class="indicator" style="position:absolute;bottom:1px;left:50%;margin-left:-8px;width:16px;height:2px;border-radius:2px;background:#fff;opacity:0;transition:opacity .3s;pointer-events:none;"></span>
                 </button>
-                <button data-app="settings" onclick="openApp('settings')" class="hover:bg-gray-700/90 p-1.5 rounded transition" style="position:relative;">
+                <button data-app="settings" onclick="openApp('settings')" class="hover:bg-white/10 hover:backdrop-blur-md p-1.5 hover:animate-enlarge rounded transition" style="position:relative;">
                     <img src="icons/settings-icon.svg" alt="Settings" class="w-8 h-6">
                     <span class="indicator" style="position:absolute;bottom:1px;left:50%;margin-left:-8px;width:16px;height:2px;border-radius:2px;background:#fff;opacity:0;transition:opacity .3s;pointer-events:none;"></span>
                 </button>
-                <button data-app="weather-app" onclick="openApp('weather-app')" class="hover:bg-gray-700/90 p-1.5 rounded transition" style="position:relative;">
+                <button data-app="weather-app" onclick="openApp('weather-app')" class="hover:bg-white/10 hover:backdrop-blur-md p-1.5 hover:animate-enlarge rounded transition" style="position:relative;">
                     <img src="icons/weather-icon.svg" alt="Weather" class="w-8 h-6">
                     <span class="indicator" style="position:absolute;bottom:1px;left:50%;margin-left:-8px;width:16px;height:2px;border-radius:2px;background:#fff;opacity:0;transition:opacity .3s;pointer-events:none;"></span>
                 </button>
                 <!--Date & Time Alawys in the last-->
-                <div class="hover:border-2 font-redaction hover:border-gray-600 px-2 py-1 rounded transition flex flex-col items-center border-2 border-gray-600">
+                <div class="hover:border-2 font-redaction hover:border-blue-950 px-2 py-1 rounded transition flex flex-col items-center border-2 border-gray-600">
                     <p id="date" class="date text-xs text-gray-400">1 Jan 2026</p>
                     <p id="time" class="time text-xs text-gray-400">10:00 AM</p>
                 </div>
