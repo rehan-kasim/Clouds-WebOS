@@ -131,6 +131,26 @@
                     <iframe id="browser-frame" src="https://www.google.com/search?&igu=1" class="flex-1 w-full bg-white rounded" style="border:0;"></iframe>
                 </div>
             </div>
+            <!--About App-->
+            <div id="about-app" class="main-window hidden flex flex-col absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 bg-gray-900/95 backdrop-blur-md rounded-xl shadow-2xl border border-gray-700 text-white z-30 overflow-hidden">
+                <!--Header-->
+                <div class="window-header flex justify-between items-center px-3 py-2 bg-gray-800/80 border-b border-gray-700 cursor-move">
+                    <span class="text-xs font-semibold text-gray-300">About Clouds</span>
+                    <div class="flex items-center space-x-2 text-xs">
+                        <button onclick="minimize('about-app')" class="hover:bg-gray-700 px-2 py-0.5 rounded text-gray-400 hover:text-white">-</button>
+                        <button onclick="maximize('about-app')" class="hover:bg-gray-700 px-2 py-0.5 rounded text-gray-400 hover:text-white">□</button>
+                        <button onclick="closeApp('about-app')" class="hover:bg-red-600 px-2 py-0.5 rounded text-gray-400 hover:text-white">✕</button>
+                    </div>
+                </div>
+                <!--Body-->
+                <div class="font-redaction flex flex-col flex-1 min-h-0 gap-2 bg-gray-700 p-4">
+                    <h1 class="text-lg font-semibold mb-2">Clouds OS</h1>
+                    <p class="text-sm mb-4">Clouds is a web-based operating system I made for fun as a exercise to learn web development.tailwind and javescript mainly make sure to star the repo on github here is the <a href="https://github.com/rehan-kasim/Clouds-WebOS" target="_blank" class="text-blue-400 hover:underline">link</a></p>
+                    <p class="text-sm mb-4">Version: 1.0.0</p>
+                    <p class="text-sm mb-4">Developed by: <a href="https://github.com/rehan-kasim" target="_blank" class="text-blue-400 hover:underline">Rehan Kasim</a></p>
+                </div>
+            </div>
+
             <!--Stopwatch app-->
             <div id="stopwatch-app" class="main-window hidden flex flex-col absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 bg-gray-900/95 backdrop-blur-md rounded-xl shadow-2xl border border-gray-700 text-white z-30 overflow-hidden">
                 <!--Header-->

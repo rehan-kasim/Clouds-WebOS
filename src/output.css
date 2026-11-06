@@ -16,6 +16,7 @@
     --color-red-900: oklch(39.6% 0.141 25.723);
     --color-yellow-500: oklch(79.5% 0.184 86.047);
     --color-green-800: oklch(44.8% 0.119 151.328);
+    --color-blue-400: oklch(70.7% 0.165 254.624);
     --color-blue-500: oklch(62.3% 0.214 259.815);
     --color-blue-600: oklch(54.6% 0.245 262.881);
     --color-slate-700: oklch(37.2% 0.044 257.287);
@@ -641,6 +642,9 @@
     --tw-tracking: var(--tracking-widest);
     letter-spacing: var(--tracking-widest);
   }
+  .text-blue-400 {
+    color: var(--color-blue-400);
+  }
   .text-gray-200 {
     color: var(--color-gray-200);
   }
@@ -773,6 +777,9 @@
     }
     .hover\:text-white:hover {
       color: var(--color-white);
+    }
+    .hover\:underline:hover {
+      text-decoration-line: underline;
     }
   }
   .focus\:ring-2:focus {
