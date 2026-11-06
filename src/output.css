@@ -534,6 +534,9 @@
   .bg-\[url\(\'wallpapers\/wallpaper1\.jpg\'\)\] {
     background-image: url('wallpapers/wallpaper1.jpg');
   }
+  .bg-\[url\(\'wallpapers\/wallpaper7\.jpg\'\)\] {
+    background-image: url('wallpapers/wallpaper7.jpg');
+  }
   .bg-cover {
     background-size: cover;
   }
