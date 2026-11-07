@@ -495,3 +495,9 @@ function changewallpaperrandom() {
 loadWeather();
 updateClock(); // Initial call to set the clock immediately
 setInterval(updateClock, 1000);
+Object.assign(window, {
+    openApp, closeApp, minimize, maximize,
+    setWallpaper, changewallpaperrandom,
+    appendtodisplay, cleardisplay, deleteLastChar, calculate,
+    go_to_url, refresh_browser
+});
