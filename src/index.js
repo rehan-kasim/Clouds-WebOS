@@ -63,10 +63,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (progressBar) progressBar.style.width = `${progress}%`;
         if (bootStatus) {
-            if (progress > 75) {bootStatus.textContent = statuses[3]
-                                bootScreen.classList.add('bg-white/10','backdrop-blur-md');}
-            else if (progress > 50) bootStatus.textContent = statuses[2];
-            else if (progress > 25) bootStatus.textContent = statuses[1];
+            if (progress > 75) {bootStatus.textContent = statuses[3]}
+            if (progress > 50) {bootStatus.textContent = statuses[2]
+                bootScreen.classList.add('bg-white/10','backdrop-blur-md')};
+            if (progress > 25) {bootStatus.textContent = statuses[1]};
         }
     }, intervalTime);
 });
@@ -83,7 +83,7 @@ function hideWin(app) {
     app.style.display = '';
 }
 
-// plain px instead of the tailwind translate stuff, it kept fighting with dragging
+// plain px instead of the tailwind translate stuff
 function placeWindowCenter(app) {
     app.classList.remove('top-1/2', 'left-1/2', 'transform', '-translate-x-1/2', '-translate-y-1/2');
     app.style.transform = 'none';
