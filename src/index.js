@@ -483,7 +483,7 @@ document.addEventListener('click', (e) => {
 });
 
 function changewallpaperrandom() {
-    let wallpapers = ['wallpapers/wallpaper1.jpg', 'wallpapers/wallpaper2.jpg', 'wallpapers/wallpaper3.jpg',"wallpaper/wallpaper4.jpg","wallpaper/wallpaper5.jpg","wallpaper/wallpaper6.jpg","wallpaper/wallpaper7.jpg","wallpaper/wallpaper8.jpg","wallpaper/wallpaper9.jpg","wallpaper/wallpaper10.png"];
+    let wallpapers = ['assets/wallpapers/wallpaper1.jpg', 'assets/wallpapers/wallpaper2.jpg', 'assets/wallpapers/wallpaper3.jpg',"assets/wallpapers/wallpaper4.jpg","assets/wallpapers/wallpaper5.jpg","assets/wallpapers/wallpaper6.jpg","assets/wallpapers/wallpaper7.jpg","assets/wallpapers/wallpaper8.jpg","assets/wallpapers/wallpaper9.jpg","assets/wallpapers/wallpaper10.png"];
     const rand_num = Math.floor(Math.random() * 10);
     wall = wallpapers[rand_num];
     setWallpaper(wall);
