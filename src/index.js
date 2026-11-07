@@ -18,7 +18,7 @@ const statuses = [
     "Welcome"
 ];
 let progress = 0;
-const totalBootTime = 1000;
+const totalBootTime = 5000;
 const intervalTime = 50;
 const increment = (intervalTime / totalBootTime) * 100;
 
@@ -63,7 +63,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         if (progressBar) progressBar.style.width = `${progress}%`;
         if (bootStatus) {
-            if (progress > 75) bootStatus.textContent = statuses[3];
+            if (progress > 75) {bootStatus.textContent = statuses[3]
+                                bootScreen.classList.add('bg-white/10','backdrop-blur-md');}
             else if (progress > 50) bootStatus.textContent = statuses[2];
             else if (progress > 25) bootStatus.textContent = statuses[1];
         }
