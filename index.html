@@ -147,30 +147,30 @@
         <!-- Apps Workspace -->
         <div id="apps">
             <!--Note PAd app-->
-            <div id="note-pad" class="main-window hidden flex flex-col absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 bg-gray-900/95 backdrop-blur-md rounded-xl shadow-2xl border border-gray-700 text-white z-30 overflow-hidden">
+            <div id="note-pad" class="main-window hidden flex flex-col absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96  backdrop-blur-md rounded-xl shadow-2xl border border-none text-black z-30 overflow-hidden">
                 <!--header-->
-                <div class="window-header flex justify-between items-center px-3 py-2 bg-gray-800/80 border-b border-gray-700 cursor-move">
-                    <span class="text-xs font-semibold text-gray-300">Coffe Clicker</span>
+                <div class="window-header flex justify-between items-center px-3 py-2 bg-white/10 backdrop-blur-md border-b border-gray-700 cursor-move">
+                    <span class="text-xs font-semibold text-black">Note Pad</span>
                     <div class="flex items-center space-x-2 text-xs">
-                        <button onclick="minimize('note-pad')" class="hover:bg-gray-700 px-2 py-0.5 rounded text-gray-400 hover:text-white">-</button>
-                        <button onclick="maximize('note-pad')" class="hover:bg-gray-700 px-2 py-0.5 rounded text-gray-400 hover:text-white">□</button>
-                        <button onclick="closeApp('note-pad')" class="hover:bg-red-600 px-2 py-0.5 rounded text-gray-400 hover:text-white">✕</button>
+                        <button onclick="minimize('note-pad')" class="hover:bg-gray-700 px-2 py-0.5 rounded text-black hover:text-black">-</button>
+                        <button onclick="maximize('note-pad')" class="hover:bg-gray-700 px-2 py-0.5 rounded text-black hover:text-black">□</button>
+                        <button onclick="closeApp('note-pad')" class="hover:bg-red-600 px-2 py-0.5 rounded text-black">✕</button>
                     </div>
                 </div>
                 <!--Body-->
-                <div class="gap-2 bg-gray-700 p-2">
-                    <textarea class="bg-white/10 backdrop-blur-md" placeholder="Start noting...."></textarea>
+                <div class="bg-gray-800/80">
+                    <textarea class="bg-white/10 outline-none backdrop-blur-md h-50 text-white w-full" placeholder="Start noting...."></textarea>
                 </div>
             </div>
             <!--Coffee clicker game using iframe-->
             <div id="coffe-clicker" class="main-window hidden flex flex-col absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 bg-gray-900/95 backdrop-blur-md rounded-xl shadow-2xl border border-gray-700 text-white z-30 overflow-hidden">
                 <!--Header-->
-                <div class="window-header flex justify-between items-center px-3 py-2 bg-gray-800/80 border-b border-gray-700 cursor-move">
+                <div class="window-header flex justify-between items-center px-3 py-2 bg-white/10 backdrop-blur-md border-b border-gray-700 cursor-move">
                     <span class="text-xs font-semibold text-gray-300">Coffe Clicker</span>
                     <div class="flex items-center space-x-2 text-xs">
-                        <button onclick="minimize('coffe-clicker')" class="hover:bg-gray-700 px-2 py-0.5 rounded text-gray-400 hover:text-white">-</button>
-                        <button onclick="maximize('coffe-clicker')" class="hover:bg-gray-700 px-2 py-0.5 rounded text-gray-400 hover:text-white">□</button>
-                        <button onclick="closeApp('coffe-clicker')" class="hover:bg-red-600 px-2 py-0.5 rounded text-gray-400 hover:text-white">✕</button>
+                        <button onclick="minimize('coffe-clicker')" class="hover:bg-gray-700 px-2 py-0.5 rounded text-black hover:text-black">-</button>
+                        <button onclick="maximize('coffe-clicker')" class="hover:bg-gray-700 px-2 py-0.5 rounded text-black hover:text-black">□</button>
+                        <button onclick="closeApp('coffe-clicker')" class="hover:bg-red-600 px-2 py-0.5 rounded text-black">✕</button>
                     </div>
                 </div>
                 <!--Body-->
@@ -179,12 +179,12 @@
             <!--browser app-->
             <div id="browser-app" class="main-window hidden flex flex-col absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-900/95 backdrop-blur-md rounded-xl shadow-2xl border border-gray-700 text-white z-30 overflow-hidden" style="width:720px;height:460px;">
                 <!--Header-->
-                <div class="window-header flex justify-between items-center px-3 py-2 bg-gray-800/80 border-b border-gray-700 cursor-move">
+                <div class="window-header flex justify-between items-center px-3 py-2 bg-white/10 backdrop-blur-md border-b border-gray-700 cursor-move">
                     <span class="text-xs font-semibold text-gray-300">Browser</span>
                     <div class="flex items-center space-x-2 text-xs">
-                        <button onclick="minimize('browser-app')" class="hover:bg-gray-700 px-2 py-0.5 rounded text-gray-400 hover:text-white">-</button>
-                        <button onclick="maximize('browser-app')" class="hover:bg-gray-700 px-2 py-0.5 rounded text-gray-400 hover:text-white">□</button>
-                        <button onclick="closeApp('browser-app')" class="hover:bg-red-600 px-2 py-0.5 rounded text-gray-400 hover:text-white">✕</button>
+                        <button onclick="minimize('browser-app')" class="hover:bg-gray-700 px-2 py-0.5 rounded text-black hover:text-black">-</button>
+                        <button onclick="maximize('browser-app')" class="hover:bg-gray-700 px-2 py-0.5 rounded text-black hover:text-black">□</button>
+                        <button onclick="closeApp('browser-app')" class="hover:bg-red-600 px-2 py-0.5 rounded text-black">✕</button>
                     </div>
                 </div>
                 <!--Body-->
@@ -200,7 +200,7 @@
             <!--About App-->
             <div id="about-app" class="main-window hidden flex flex-col absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 bg-gray-900/95 backdrop-blur-md rounded-xl shadow-2xl border border-gray-700 text-white z-30 overflow-hidden">
                 <!--Header-->
-                <div class="window-header flex justify-between items-center px-3 py-2 bg-gray-800/80 border-b border-gray-700 cursor-move">
+                <div class="window-header flex justify-between items-center px-3 py-2 bg-white/10 backdrop-blur-md border-b border-gray-700 cursor-move">
                     <span class="text-xs font-semibold text-gray-300">About Clouds</span>
                     <div class="flex items-center space-x-2 text-xs">
                         <button onclick="closeApp('about-app')" class="px-2 py-0.5 rounded text-gray-400 hover:text-white">✕</button>
@@ -218,7 +218,7 @@
             <!--Stopwatch app-->
             <div id="stopwatch-app" class="main-window hidden flex flex-col absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 bg-gray-900/95 backdrop-blur-md rounded-xl shadow-2xl border border-gray-700 text-white z-30 overflow-hidden">
                 <!--Header-->
-                <div class="window-header flex justify-between items-center px-3 py-2 bg-gray-800/80 border-b border-gray-700 cursor-move">
+                <div class="window-header flex justify-between items-center px-3 py-2 bg-white/10 backdrop-blur-md border-b border-gray-700 cursor-move">
                     <span class="text-xs font-semibold text-gray-300">StopWatch</span>
                     <div class="flex items-center space-x-2 text-xs">
                         <button onclick="minimize('stopwatch-app')" class="hover:bg-gray-700 px-2 py-0.5 rounded text-gray-400 hover:text-white">-</button>
@@ -241,7 +241,7 @@
             <!--Weather App-->
             <div id="weather-app" class="main-window hidden flex flex-col absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 bg-gray-900/95 backdrop-blur-md rounded-xl shadow-2xl border border-gray-700 text-white z-30 overflow-hidden">
                 <!--Window Header-->
-                <div class="window-header flex justify-between items-center px-3 py-2 bg-gray-800/80 border-b border-gray-700 cursor-move">
+                <div class="window-header flex justify-between items-center px-3 py-2 bg-white/10 backdrop-blur-md border-b border-gray-700 cursor-move">
                     <span class="text-xs font-semibold text-gray-300">Weather App</span>
                     <div class="flex items-center space-x-2 text-xs">
                         <button onclick="minimize('weather-app')" class="hover:bg-gray-700 px-2 py-0.5 rounded text-gray-400 hover:text-white">-</button>
@@ -262,7 +262,7 @@
             <!--Settings App-->
             <div id="settings" class="main-window hidden flex flex-col absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 bg-gray-900/95 backdrop-blur-md rounded-xl shadow-2xl border border-gray-700 text-white z-30 overflow-hidden">
                 <!-- Window Header -->
-                <div class="window-header flex justify-between items-center px-3 py-2 bg-gray-800/80 border-b border-gray-700 cursor-move">
+                <div class="window-header flex justify-between items-center px-3 py-2 bg-white/10 backdrop-blur-md border-b border-gray-700 cursor-move">
                     <span class="text-xs font-semibold text-gray-300">Settings</span>
                     <div class="flex items-center space-x-2 text-xs">
                         <button onclick="minimize('settings')" class="hover:bg-gray-700 px-2 py-0.5 rounded text-gray-400 hover:text-white">-</button>
@@ -291,7 +291,7 @@
             <!-- Calculator App Window -->
             <div id="calculator" class="main-window hidden absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 bg-gray-900/95 backdrop-blur-md rounded-xl shadow-2xl border border-gray-700 text-white z-30 overflow-hidden">
                 <!-- Window Header -->
-                <div class="window-header flex justify-between items-center px-3 py-2 bg-gray-800/80 border-b border-gray-700 cursor-move">
+                <div class="window-header flex justify-between items-center px-3 py-2 bg-white/10 backdrop-blur-md border-b border-gray-700 cursor-move">
                     <span class="text-xs font-semibold text-gray-300">Calculator</span>
                     <div class="flex items-center space-x-2 text-xs">
                         <button onclick="minimize('calculator')" class="hover:bg-gray-700 px-2 py-0.5 rounded text-gray-400 hover:text-white">-</button>
