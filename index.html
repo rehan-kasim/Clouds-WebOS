@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clouds</title>
     <link rel="stylesheet" href="src/output.css">
-    <link rel="icon" href="assets/icons/Start.svg" type="image/svg+xml">
+    <link rel="icon" href="/icons/Start.svg" type="image/svg+xml">
 </head>
 <body class="h-screen overflow-hidden bg-slate-700 bg-[url('wallpapers/wallpaper7.jpg')] bg-cover bg-center bg-no-repeat text-slate-900 select-none">
     <div id="desktop" class="h-full w-full relative">
@@ -13,7 +13,7 @@
         <!-- Boot Screen Overlay -->
         <div id="boot-screen" class="font-redaction absolute inset-0 bg-black flex flex-col items-center justify-center text-white z-50 transition-opacity duration-700">
             <div class="text-center">
-                <img src="assets/icons/Start.svg" alt="Clouds Logo" width="100" height="100">
+                <img src="/icons/Start.svg" alt="Clouds Logo" width="100" height="100">
                 <h1 class="text-3xl font-light tracking-widest mb-4">CLOUDS</h1>
                 <div class="w-48 h-1.5 bg-gray-800 rounded-full overflow-hidden mx-auto">
                     <div id="boot-progress" class="w-0 h-full bg-blue-500 transition-all duration-100 ease-out"></div>
@@ -49,7 +49,7 @@
             <!-- Start Button -->
             <div class="flex space-x-2 bg-white/10 backdrop-blur-md rounded-r-lg px-2 py-1">
                 <div id="start-menu-button" class="text-white mb-0 cursor-pointer border backdrop-blur-md border-gray-600 rounded-full px-3 py-2.5 hover:bg-gray-700 transition">
-                <img src="assets/icons/Start.svg" alt="Start" class="h-5 m-0 w-5">
+                <img src="/icons/Start.svg" alt="Start" class="h-5 m-0 w-5">
                 </div>
             </div>
                 
@@ -71,31 +71,31 @@
                     <h3 class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Apps</h3>
                     <div class="grid grid-cols-4 gap-2">
                         <div onclick="openApp('calculator')" class="flex flex-col items-center cursor-pointer hover:bg-gray-800 p-2 rounded transition">
-                            <img src="assets/icons/calculator-icon.svg" alt="Calculator" class="w-8 h-8 mb-1">
+                            <img src="/icons/calculator-icon.svg" alt="Calculator" class="w-8 h-8 mb-1">
                             <span class="text-xs">Calculator</span>
                         </div>
                         <div onclick="openApp('settings')" class="flex flex-col items-center cursor-pointer hover:bg-gray-800 p-2 rounded transition">
-                            <img src="assets/icons/settings-icon.svg" alt="Settings" class="w-8 h-8 mb-1">
+                            <img src="/icons/settings-icon.svg" alt="Settings" class="w-8 h-8 mb-1">
                             <span class="text-xs">Settings</span>
                         </div>
                         <div onclick="openApp('weather-app')" class="flex flex-col items-center cursor-pointer hover:bg-gray-800 p-2 rounded transition">
-                            <img src="assets/icons/weather-icon.svg" alt="Weather" class="w-8 h-8 mb-1">
+                            <img src="/icons/weather-icon.svg" alt="Weather" class="w-8 h-8 mb-1">
                             <span class="text-xs">Weather</span>
                         </div>
                         <div onclick="openApp('stopwatch-app')" class="flex flex-col items-center cursor-pointer hover:bg-gray-800 p-2 rounded transition">
-                            <img src="assets/icons/stopwatch-icon.svg" alt="Stopwatch" class="w-8 h-8 mb-1">
+                            <img src="/icons/stopwatch-icon.svg" alt="Stopwatch" class="w-8 h-8 mb-1">
                             <span class="text-xs">Stopwatch</span>
                         </div>
                         <div onclick="openApp('browser-app')" class="flex flex-col items-center cursor-pointer hover:bg-gray-800 p-2 rounded transition">
-                            <img src="assets/icons/browser-icon.svg" alt="Browser" class="w-8 h-8 mb-1">
+                            <img src="/icons/browser-icon.svg" alt="Browser" class="w-8 h-8 mb-1">
                             <span class="text-xs">Browser</span>
                         </div>
                         <div onclick="openApp('about-app')" class="flex flex-col items-center cursor-pointer hover:bg-gray-800 p-2 rounded transition">
-                            <img src="assets/icons/about-icon.svg" alt="About" class="w-8 h-8 mb-1">
+                            <img src="/icons/about-icon.svg" alt="About" class="w-8 h-8 mb-1">
                             <span class="text-xs">About</span>
                         </div>
                         <div onclick="openApp('coffe-clicker') || maximize('coffe-clicker')" class="flex flex-col items-center cursor-pointer hover:bg-gray-800 p-2 rounded transition">
-                            <img src="assets/icons/coffee-icon.svg" alt="Coffe Clicker" class="w-8 h-8 mb-1">
+                            <img src="/icons/coffee-icon.svg" alt="Coffe Clicker" class="w-8 h-8 mb-1">
                             <span class="text-xs">Coffe Clicker</span>
                         </div>
                     </div>
@@ -105,31 +105,31 @@
             <!-- Taskbar Icons -->
             <div id="taskbar-icons" class="flex space-x-2 mr-1.5 bg-white/10 backdrop-blur-md rounded-lg px-2 py-1">
                 <button data-app="calculator" onclick="openApp('calculator')" class="hover:bg-white/10 hover:backdrop-blur-md p-1.5 hover:animate-enlarge rounded transition" style="position:relative;">
-                    <img src="assets/icons/calculator-icon.svg" alt="Calculator" class="w-8 h-6">
+                    <img src="/icons/calculator-icon.svg" alt="Calculator" class="w-8 h-6">
                     <span class="indicator" style="position:absolute;bottom:1px;left:50%;margin-left:-8px;width:16px;height:2px;border-radius:2px;background:#fff;opacity:0;transition:opacity .3s;pointer-events:none;"></span>
                 </button>
                 <button data-app="browser-app" onclick="openApp('browser-app')" class="hover:bg-white/10 hover:backdrop-blur-md p-1.5 hover:animate-enlarge rounded transition" style="position:relative;">
-                    <img src="assets/icons/browser-icon.svg" alt="Browser" class="w-8 h-6">
+                    <img src="/icons/browser-icon.svg" alt="Browser" class="w-8 h-6">
                     <span class="indicator" style="position:absolute;bottom:1px;left:50%;margin-left:-8px;width:16px;height:2px;border-radius:2px;background:#fff;opacity:0;transition:opacity .3s;pointer-events:none;"></span>
                 </button>
                 <button data-app="about-app" onclick="openApp('about-app')" class="hover:bg-white/10 hover:backdrop-blur-md p-1.5 hover:animate-enlarge rounded transition" style="position:relative;">
-                    <img src="assets/icons/about-icon.svg" alt="About" class="w-8 h-6">
+                    <img src="/icons/about-icon.svg" alt="About" class="w-8 h-6">
                     <span class="indicator" style="position:absolute;bottom:1px;left:50%;margin-left:-8px;width:16px;height:2px;border-radius:2px;background:#fff;opacity:0;transition:opacity .3s;pointer-events:none;"></span>
                 </button>
                 <button data-app="stopwatch-app" onclick="openApp('stopwatch-app')" class="hover:bg-white/10 hover:backdrop-blur-md p-1.5 hover:animate-enlarge rounded transition" style="position:relative;">
-                    <img src="assets/icons/stopwatch-icon.svg" alt="stopwatch" class="w-8 h-6">
+                    <img src="/icons/stopwatch-icon.svg" alt="stopwatch" class="w-8 h-6">
                     <span class="indicator" style="position:absolute;bottom:1px;left:50%;margin-left:-8px;width:16px;height:2px;border-radius:2px;background:#fff;opacity:0;transition:opacity .3s;pointer-events:none;"></span>
                 </button>
                 <button data-app="coffe-clicker" onclick="openApp('coffe-clicker') || maximize('coffe-clicker')" class="hover:bg-white/10 hover:backdrop-blur-md p-1.5 hover:animate-enlarge rounded transition" style="position:relative;">
-                    <img src="assets/icons/coffee-icon.svg" alt="Coffe Clicker" class="w-8 h-6">
+                    <img src="/icons/coffee-icon.svg" alt="Coffe Clicker" class="w-8 h-6">
                     <span class="indicator" style="position:absolute;bottom:1px;left:50%;margin-left:-8px;width:16px;height:2px;border-radius:2px;background:#fff;opacity:0;transition:opacity .3s;pointer-events:none;"></span>
                 </button>
                 <button data-app="settings" onclick="openApp('settings')" class="hover:bg-white/10 hover:backdrop-blur-md p-1.5 hover:animate-enlarge rounded transition" style="position:relative;">
-                    <img src="assets/icons/settings-icon.svg" alt="Settings" class="w-8 h-6">
+                    <img src="/icons/settings-icon.svg" alt="Settings" class="w-8 h-6">
                     <span class="indicator" style="position:absolute;bottom:1px;left:50%;margin-left:-8px;width:16px;height:2px;border-radius:2px;background:#fff;opacity:0;transition:opacity .3s;pointer-events:none;"></span>
                 </button>
                 <button data-app="weather-app" onclick="openApp('weather-app')" class="hover:bg-white/10 hover:backdrop-blur-md p-1.5 hover:animate-enlarge rounded transition" style="position:relative;">
-                    <img src="assets/icons/weather-icon.svg" alt="Weather" class="w-8 h-6">
+                    <img src="/icons/weather-icon.svg" alt="Weather" class="w-8 h-6">
                     <span class="indicator" style="position:absolute;bottom:1px;left:50%;margin-left:-8px;width:16px;height:2px;border-radius:2px;background:#fff;opacity:0;transition:opacity .3s;pointer-events:none;"></span>
                 </button>
                 <!--Date & Time Alawys in the last-->
@@ -256,16 +256,16 @@
                 <!-- Settings Body -->
                 <div class="p-4 gap-4">
                     <p>Choose Wallpaper</p>
-                    <button class="cursor-pointer rounded-lg overflow-hidden border-2 border-blue-500" onclick="setWallpaper('assets/wallpapers/wallpaper1.jpg')"><img src="assets/wallpapers/wallpaper1.jpg" width="100"></button>
-                    <button class="cursor-pointer rounded-lg overflow-hidden border-2 border-blue-500" onclick="setWallpaper('assets/wallpapers/wallpaper2.jpg')"><img src="assets/wallpapers/wallpaper2.jpg" width="100"></button>
-                    <button class="cursor-pointer rounded-lg overflow-hidden border-2 border-blue-500" onclick="setWallpaper('assets/wallpapers/wallpaper3.jpg')"><img src="assets/wallpapers/wallpaper3.jpg" width="100"></button>
-                    <button class="cursor-pointer rounded-lg overflow-hidden border-2 border-blue-500" onclick="setWallpaper('assets/wallpapers/wallpaper4.jpg')"><img src="assets/wallpapers/wallpaper4.jpg" width="100"></button>
-                    <button class="cursor-pointer rounded-lg overflow-hidden border-2 border-blue-500" onclick="setWallpaper('assets/wallpapers/wallpaper5.jpg')"><img src="assets/wallpapers/wallpaper5.jpg" width="100"></button>
-                    <button class="cursor-pointer rounded-lg overflow-hidden border-2 border-blue-500" onclick="setWallpaper('assets/wallpapers/wallpaper6.jpg')"><img src="assets/wallpapers/wallpaper6.jpg" width="100"></button>
-                    <button class="cursor-pointer rounded-lg overflow-hidden border-2 border-blue-500" onclick="setWallpaper('assets/wallpapers/wallpaper7.jpg')"><img src="assets/wallpapers/wallpaper7.jpg" width="100"></button>
-                    <button class="cursor-pointer rounded-lg overflow-hidden border-2 border-blue-500" onclick="setWallpaper('assets/wallpapers/wallpaper8.jpg')"><img src="assets/wallpapers/wallpaper8.jpg" width="100"></button>
-                    <button class="cursor-pointer rounded-lg overflow-hidden border-2 border-blue-500" onclick="setWallpaper('assets/wallpapers/wallpaper9.jpg')"><img src="assets/wallpapers/wallpaper9.jpg" width="100"></button>
-                    <button class="cursor-pointer rounded-lg overflow-hidden border-2 border-blue-500" onclick="setWallpaper('assets/wallpapers/wallpaper10.png')"><img src="assets/wallpapers/wallpaper10.png" width="100"></button>
+                    <button class="cursor-pointer rounded-lg overflow-hidden border-2 border-blue-500" onclick="setWallpaper('/wallpapers/wallpaper1.jpg')"><img src="/wallpapers/wallpaper1.jpg" width="100"></button>
+                    <button class="cursor-pointer rounded-lg overflow-hidden border-2 border-blue-500" onclick="setWallpaper('/wallpapers/wallpaper2.jpg')"><img src="/wallpapers/wallpaper2.jpg" width="100"></button>
+                    <button class="cursor-pointer rounded-lg overflow-hidden border-2 border-blue-500" onclick="setWallpaper('/wallpapers/wallpaper3.jpg')"><img src="/wallpapers/wallpaper3.jpg" width="100"></button>
+                    <button class="cursor-pointer rounded-lg overflow-hidden border-2 border-blue-500" onclick="setWallpaper('/wallpapers/wallpaper4.jpg')"><img src="/wallpapers/wallpaper4.jpg" width="100"></button>
+                    <button class="cursor-pointer rounded-lg overflow-hidden border-2 border-blue-500" onclick="setWallpaper('/wallpapers/wallpaper5.jpg')"><img src="/wallpapers/wallpaper5.jpg" width="100"></button>
+                    <button class="cursor-pointer rounded-lg overflow-hidden border-2 border-blue-500" onclick="setWallpaper('/wallpapers/wallpaper6.jpg')"><img src="/wallpapers/wallpaper6.jpg" width="100"></button>
+                    <button class="cursor-pointer rounded-lg overflow-hidden border-2 border-blue-500" onclick="setWallpaper('/wallpapers/wallpaper7.jpg')"><img src="/wallpapers/wallpaper7.jpg" width="100"></button>
+                    <button class="cursor-pointer rounded-lg overflow-hidden border-2 border-blue-500" onclick="setWallpaper('/wallpapers/wallpaper8.jpg')"><img src="/wallpapers/wallpaper8.jpg" width="100"></button>
+                    <button class="cursor-pointer rounded-lg overflow-hidden border-2 border-blue-500" onclick="setWallpaper('/wallpapers/wallpaper9.jpg')"><img src="/wallpapers/wallpaper9.jpg" width="100"></button>
+                    <button class="cursor-pointer rounded-lg overflow-hidden border-2 border-blue-500" onclick="setWallpaper('/wallpapers/wallpaper10.png')"><img src="/wallpapers/wallpaper10.png" width="100"></button>
                 </div>
 
             </div>
@@ -315,6 +315,6 @@
         </div>
     </div>
 
-    <script src="src/index.js" type="module"></script>
+    <script type="module" src="src/index.js"></script>
 </body>
 </html>

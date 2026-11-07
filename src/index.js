@@ -1,3 +1,5 @@
+import './input.css'
+
 const startMenuButton = document.getElementById('start-menu-button');
 const startMenu = document.getElementById('start-menu');
 const bootScreen = document.getElementById('boot-screen');
@@ -483,7 +485,7 @@ document.addEventListener('click', (e) => {
 });
 
 function changewallpaperrandom() {
-    let wallpapers = ['assets/wallpapers/wallpaper1.jpg', 'assets/wallpapers/wallpaper2.jpg', 'assets/wallpapers/wallpaper3.jpg',"assets/wallpapers/wallpaper4.jpg","assets/wallpapers/wallpaper5.jpg","assets/wallpapers/wallpaper6.jpg","assets/wallpapers/wallpaper7.jpg","assets/wallpapers/wallpaper8.jpg","assets/wallpapers/wallpaper9.jpg","assets/wallpapers/wallpaper10.png"];
+    let wallpapers = ['/wallpapers/wallpaper1.jpg', '/wallpapers/wallpaper2.jpg', '/wallpapers/wallpaper3.jpg','/wallpapers/wallpaper4.jpg','/wallpapers/wallpaper5.jpg','/wallpapers/wallpaper6.jpg','/wallpapers/wallpaper7.jpg','/wallpapers/wallpaper8.jpg','/wallpapers/wallpaper9.jpg','/wallpapers/wallpaper10.png'];
     const rand_num = Math.floor(Math.random() * 10);
     wall = wallpapers[rand_num];
     setWallpaper(wall);
