@@ -494,75 +494,73 @@ function changewallpaperrandom() {
 
 // paint logic
 
-const paintCanvas = document.getElementById('paint-canvas');
-const paintCtx = paintCanvas.getContext('2d');
+const canvas = document.getElementById("paint-canvas");
+const ctx = canvas.getContext("2d");
+const colorPicker = document.getElementById("color-picker");
+const brushSize = document.getElementById("brush-size");
 
 let drawing = false;
 
 function resizeCanvas() {
-    const rect = paintCanvas.getBoundingClientRect();
+    const rect = canvas.getBoundingClientRect();
     const dpr = window.devicePixelRatio || 1;
 
     // Preserve the existing drawing while resizing.
-    const image = paintCanvas.width && paintCanvas.height
-      ? paintCtx.getImageData(0, 0, paintCanvas.width, paintCanvas.height)
+    const image = canvas.width && canvas.height
+      ? ctx.getImageData(0, 0, canvas.width, canvas.height)
       : null;
-
-    paintCanvas.width = rect.width * dpr;
-    paintCanvas.height = rect.height * dpr;
-    paintCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     if (image) {
-      paintCtx.putImageData(image, 0, 0);
+      ctx.putImageData(image, 0, 0);
     }
 
-    paintCtx.lineCap = "round";
-    paintCtx.lineJoin = "round";
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
   }
-
 function getPosition(event) {
-    const rect = paintCanvas.getBoundingClientRect();
+    const rect = canvas.getBoundingClientRect();
     return {
       x: event.clientX - rect.left,
       y: event.clientY - rect.top
-    };
-}
-function clearCanvas() {
-    const rect = paintCanvas.getBoundingClientRect();
-    paintCtx.clearRect(0, 0, rect.width, rect.height);
+};
 }
 
-paintCanvas.addEventListener('pointerdown', (e) => {
+canvas.addEventListener("pointerdown", (event) => {
     drawing = true;
-    paintCanvas.setPointerCapture(e.pointerId);
+    canvas.setPointerCapture(event.pointerId);
 
-    const {x,y} = getPosition(e);
-    paintCtx.beginPath();
-    paintCtx.moveTo(x, y);
-    paintCtx.lineTo(x, y);
-    paintCtx.strokeStyle = colorPicker.value;
-    paintCtx.lineWidth = Number(brushSize.value) || 5;
-    paintCtx.stroke();
+    const { x, y } = getPosition(event);
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(x, y); // Draw a dot on a click/tap.
+    ctx.strokeStyle = colorPicker.value;
+    ctx.lineWidth = Number(brushSize.value) || 5;
+    ctx.stroke();
 });
 
-paintCanvas.addEventListener('pointermove', (e) => {
-    if (!drawing) return;   
-
-    const {x,y} = getPosition(e);
-    paintCtx.lineTo(x, y);
-    paintCtx.stroke();
-});
-
-function stopDrawing(e) {
+canvas.addEventListener("pointermove", (event) => {
     if (!drawing) return;
+    const { x, y } = getPosition(event);
+    ctx.lineTo(x, y);
+    ctx.stroke();
+});
+
+function stopDrawing() {
     drawing = false;
-    paintCanvas.releasePointerCapture(e.pointerId);
-    paintCtx.closePath();
+    ctx.closePath();
 }
 
-paintCanvas.addEventListener("pointerup", stopDrawing);
-paintCanvas.addEventListener("pointercancel", stopDrawing);
-paintCanvas.addEventListener("lostpointercapture", stopDrawing);
+canvas.addEventListener("pointerup", stopDrawing);
+canvas.addEventListener("pointercancel", stopDrawing);
+canvas.addEventListener("lostpointercapture", stopDrawing);
+
+function clearCanvas() {
+    const rect = canvas.getBoundingClientRect();
+    ctx.clearRect(0, 0, rect.width, rect.height);
+}
 
 window.clearCanvas = clearCanvas;
 resizeCanvas();
