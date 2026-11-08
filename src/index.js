@@ -614,6 +614,19 @@ document.addEventListener('click', (e) => {
     if (!startMenu.contains(e.target)) toggleStartMenu(false);
 });
 
+// tooltips
+
+const appnames = {
+    'calculator': 'Calculator',
+    'browser-app': 'Browser',
+    'stopwatch-app': 'Stopwatch',
+    'settings': 'Settings',
+    'weather-app': 'Weather',
+    'paint-app': 'Paint',
+    'note-pad': 'Notepad',
+    'coffe-clicker': 'Coffee Clicker'}
+     
+
 resizeCanvas();
 loadWeather();
 updateClock(); // Initial call to set the clock immediately
