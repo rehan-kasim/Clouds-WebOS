@@ -492,65 +492,87 @@ function changewallpaperrandom() {
     setWallpaper(wall);
 }
 
-// paint logic
-
 const canvas = document.getElementById("paint-canvas");
 const ctx = canvas.getContext("2d");
 const colorPicker = document.getElementById("color-picker");
 const brushSize = document.getElementById("brush-size");
 
 let drawing = false;
+let lastX = 0;
+let lastY = 0;
 
 function resizeCanvas() {
-    const rect = canvas.getBoundingClientRect();
-    const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect();
+  if (rect.width === 0 || rect.height === 0) return;
 
-    // Preserve the existing drawing while resizing.
-    const image = canvas.width && canvas.height
-      ? ctx.getImageData(0, 0, canvas.width, canvas.height)
-      : null;
-    canvas.width = rect.width * dpr;
-    canvas.height = rect.height * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  const dpr = window.devicePixelRatio || 1;
+  const newW = Math.round(rect.width * dpr);
+  const newH = Math.round(rect.height * dpr);
 
-    if (image) {
-      ctx.putImageData(image, 0, 0);
-    }
+  if (canvas.width === newW && canvas.height === newH) return;
 
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
+  let saved = null;
+  if (canvas.width > 0 && canvas.height > 0) {
+    saved = document.createElement("canvas");
+    saved.width = canvas.width;
+    saved.height = canvas.height;
+    saved.getContext("2d").drawImage(canvas, 0, 0);
   }
+
+  canvas.width = newW;
+  canvas.height = newH;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+
+  if (saved) {
+    ctx.save();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    ctx.drawImage(saved, 0, 0);
+    ctx.restore();
+  }
+}
+
 function getPosition(event) {
-    const rect = canvas.getBoundingClientRect();
-    return {
-      x: event.clientX - rect.left,
-      y: event.clientY - rect.top
-};
+  const rect = canvas.getBoundingClientRect();
+  return {
+    x: event.clientX - rect.left,
+    y: event.clientY - rect.top,
+  };
 }
 
 canvas.addEventListener("pointerdown", (event) => {
-    drawing = true;
-    canvas.setPointerCapture(event.pointerId);
+  drawing = true;
+  canvas.setPointerCapture(event.pointerId);
 
-    const { x, y } = getPosition(event);
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-    ctx.lineTo(x, y); // Draw a dot on a click/tap.
-    ctx.strokeStyle = colorPicker.value;
-    ctx.lineWidth = Number(brushSize.value) || 5;
-    ctx.stroke();
+  const { x, y } = getPosition(event);
+  lastX = x;
+  lastY = y;
+
+  ctx.strokeStyle = colorPicker.value;
+  ctx.lineWidth = Number(brushSize.value) || 5;
+
+  ctx.beginPath();
+  ctx.moveTo(x, y);
+  ctx.lineTo(x, y);
+  ctx.stroke();
 });
 
 canvas.addEventListener("pointermove", (event) => {
-    if (!drawing) return;
-    const { x, y } = getPosition(event);
-    ctx.lineTo(x, y);
-    ctx.stroke();
+  if (!drawing) return;
+  const { x, y } = getPosition(event);
+
+  ctx.beginPath();
+  ctx.moveTo(lastX, lastY);
+  ctx.lineTo(x, y);
+  ctx.stroke();
+
+  lastX = x;
+  lastY = y;
 });
 
 function stopDrawing() {
-    drawing = false;
-    ctx.closePath();
+  drawing = false;
 }
 
 canvas.addEventListener("pointerup", stopDrawing);
@@ -558,17 +580,20 @@ canvas.addEventListener("pointercancel", stopDrawing);
 canvas.addEventListener("lostpointercapture", stopDrawing);
 
 function clearCanvas() {
-    const rect = canvas.getBoundingClientRect();
-    ctx.clearRect(0, 0, rect.width, rect.height);
+  ctx.save();
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.restore();
 }
 
 window.clearCanvas = clearCanvas;
-resizeCanvas();
-window.addEventListener("resize", resizeCanvas);
 
+new ResizeObserver(resizeCanvas).observe(canvas);
+resizeCanvas();
 loadWeather();
 updateClock(); // Initial call to set the clock immediately
 setInterval(updateClock, 1000);
+
 Object.assign(window, {
     openApp, closeApp, minimize, maximize,
     setWallpaper, changewallpaperrandom,
