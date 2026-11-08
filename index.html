@@ -167,8 +167,9 @@
                     <input type="color" id="color-picker" value="#000000">
                     <label for="brush-size" class="text-m">Brush Size:</label>
                     <input type="number" id="brush-size" value="5" min="1" max="50">
+                    <button id="eraser" onclick="toggleEraser()" class="bg-blue-950 hover:bg-blue-800 text-white px-3 py-1 rounded text-sm">Eraser</button>
                 </div>
-                <canvas id="paint-canvas" class="bg-white w-full h-96 touch-none"></canvas>
+                <canvas id="paint-canvas" class="bg-white w-full h-full touch-none"></canvas>
             </div>
             <!--Note PAd app-->
             <div id="note-pad" class="main-window hidden flex flex-col absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 backdrop-blur-md rounded-xl shadow-2xl border border-none text-black z-30 overflow-hidden">

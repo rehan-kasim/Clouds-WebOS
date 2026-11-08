@@ -586,6 +586,10 @@ function clearCanvas() {
   ctx.restore();
 }
 
+function toggleEraser() {
+    colorPicker.value = '#ffffff'
+}
+
 window.clearCanvas = clearCanvas;
 
 new ResizeObserver(resizeCanvas).observe(canvas);
@@ -598,5 +602,5 @@ Object.assign(window, {
     openApp, closeApp, minimize, maximize,
     setWallpaper, changewallpaperrandom,
     appendtodisplay, cleardisplay, deleteLastChar, calculate,
-    go_to_url, refresh_browser, clearCanvas
+    go_to_url, refresh_browser, clearCanvas, toggleEraser
 });
