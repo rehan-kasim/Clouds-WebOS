@@ -337,7 +337,7 @@ function updateClock() {
 }
 
 // weather app logic
-const ApiKey = '1d67ecf8acbc6348a362b908df6b380c';
+const ApiKey = import.meta.env.VITE_API;
 const city = document.getElementById('CityName');
 const temp = document.getElementById('temperatureinfo');
 const humidity = document.getElementById('humidityinfo');
