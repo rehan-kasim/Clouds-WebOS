@@ -18,7 +18,7 @@ const statuses = [
     "Welcome"
 ];
 let progress = 0;
-const totalBootTime = 5000;
+const totalBootTime = 1000;
 const intervalTime = 50;
 const increment = (intervalTime / totalBootTime) * 100;
 
@@ -492,6 +492,81 @@ function changewallpaperrandom() {
     setWallpaper(wall);
 }
 
+// paint logic
+
+const paintCanvas = document.getElementById('paint-canvas');
+const paintCtx = paintCanvas.getContext('2d');
+
+let drawing = false;
+
+function resizeCanvas() {
+    const rect = paintCanvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+
+    // Preserve the existing drawing while resizing.
+    const image = paintCanvas.width && paintCanvas.height
+      ? paintCtx.getImageData(0, 0, paintCanvas.width, paintCanvas.height)
+      : null;
+
+    paintCanvas.width = rect.width * dpr;
+    paintCanvas.height = rect.height * dpr;
+    paintCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    if (image) {
+      paintCtx.putImageData(image, 0, 0);
+    }
+
+    paintCtx.lineCap = "round";
+    paintCtx.lineJoin = "round";
+  }
+
+function getPosition(event) {
+    const rect = paintCanvas.getBoundingClientRect();
+    return {
+      x: event.clientX - rect.left,
+      y: event.clientY - rect.top
+    };
+}
+function clearCanvas() {
+    const rect = paintCanvas.getBoundingClientRect();
+    paintCtx.clearRect(0, 0, rect.width, rect.height);
+}
+
+paintCanvas.addEventListener('pointerdown', (e) => {
+    drawing = true;
+    paintCanvas.setPointerCapture(e.pointerId);
+
+    const {x,y} = getPosition(e);
+    paintCtx.beginPath();
+    paintCtx.moveTo(x, y);
+    paintCtx.lineTo(x, y);
+    paintCtx.strokeStyle = colorPicker.value;
+    paintCtx.lineWidth = Number(brushSize.value) || 5;
+    paintCtx.stroke();
+});
+
+paintCanvas.addEventListener('pointermove', (e) => {
+    if (!drawing) return;   
+
+    const {x,y} = getPosition(e);
+    paintCtx.lineTo(x, y);
+    paintCtx.stroke();
+});
+
+function stopDrawing(e) {
+    if (!drawing) return;
+    drawing = false;
+    paintCanvas.releasePointerCapture(e.pointerId);
+    paintCtx.closePath();
+}
+
+paintCanvas.addEventListener("pointerup", stopDrawing);
+paintCanvas.addEventListener("pointercancel", stopDrawing);
+paintCanvas.addEventListener("lostpointercapture", stopDrawing);
+
+window.clearCanvas = clearCanvas;
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
 
 loadWeather();
 updateClock(); // Initial call to set the clock immediately
@@ -500,5 +575,5 @@ Object.assign(window, {
     openApp, closeApp, minimize, maximize,
     setWallpaper, changewallpaperrandom,
     appendtodisplay, cleardisplay, deleteLastChar, calculate,
-    go_to_url, refresh_browser
+    go_to_url, refresh_browser, clearCanvas
 });
