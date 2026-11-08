@@ -150,7 +150,7 @@ function setIndicator(appId, on) {
 
 function openApp(appId) {
     const app = document.getElementById(appId);
-    startMenu.classList.add('hidden');
+    toggleStartMenu(false)
     if (!app) { console.error('No window with id:', appId); return; }
     if (app.dataset.animating === 'true') return;
 
