@@ -41,11 +41,11 @@ function bringToFront(app) {
 document.addEventListener('DOMContentLoaded', () => {
     startMenuButton.addEventListener('click', (e) => {
         e.stopPropagation();
-        startMenu.classList.toggle('hidden');
+        toggleStartMenu(true);
     });
     document.addEventListener('click', (e) => {
         if (!startMenu.contains(e.target) && !startMenuButton.contains(e.target)) {
-            startMenu.classList.add('hidden');
+            toggleStartMenu(false);
         }
     });
 });
@@ -591,8 +591,29 @@ function toggleEraser() {
 }
 
 window.clearCanvas = clearCanvas;
-
 new ResizeObserver(resizeCanvas).observe(canvas);
+
+// start menu logic
+
+function toggleStartMenu(force) {
+    const isOpen = !startMenu.classList.contains('-translate-x-[120%]');
+    const shouldOpen = force !== undefined ? force : !isOpen;
+
+    startMenu.classList.toggle('-translate-x-[120%]', !shouldOpen);
+    startMenu.classList.toggle('opacity-0', !shouldOpen);
+    startMenu.classList.toggle('pointer-events-none', !shouldOpen);
+}
+
+startMenuButton.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleStartMenu();
+});
+
+// close when clicking anywhere outside the menu
+document.addEventListener('click', (e) => {
+    if (!startMenu.contains(e.target)) toggleStartMenu(false);
+});
+
 resizeCanvas();
 loadWeather();
 updateClock(); // Initial call to set the clock immediately
